@@ -175,5 +175,5 @@ match_url=match_urls[0]
 html_data=requests.get(match_url)
 html_data.raise_for_status()
 soup= bs4.BeautifulSoup(html_data.text,features="lxml")
-elems=soup.find_all("td",class_="center page1 k-d-diff")
+elems=soup.find_all("td",class_="table table-striped left-side sortable-table match tablesorter tablesorter-default")
 print(elems)
