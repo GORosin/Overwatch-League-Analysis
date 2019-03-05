@@ -174,5 +174,6 @@ match_urls=["https://www.winstonslab.com/matches/match.php?id=40"+str(i) for i i
 match_url=match_urls[0]
 html_data=requests.get(match_url)
 html_data.raise_for_status()
-seriesSoup = bs4.BeautifulSoup(html_data.text)
-print(seriesSoup)
+soup= bs4.BeautifulSoup(html_data.text,features="lxml")
+elems=soup.find_all("td",class_="center page1 k-d-diff")
+print(elems)
