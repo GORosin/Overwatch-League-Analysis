@@ -5,7 +5,7 @@ from keras.layers import Dense,Dropout
 from sklearn.model_selection import cross_val_score
 from sklearn.model_selection import KFold
 import pandas as pd
-
+from keras.optimizers import Adagrad
 
 teams={"PHI":1,"LDN":2,"BOS":3,"NYE":4,"PAR":5,"GLA":6,"SHD":7,"DAL":8,"CDH":9,"VAL":10,"SEO":11,"HZS":12,"GZC":13,"TOR":14,"WAS":15,"HOU":16,"ATL":17,"FLA":18,"SFS":19,"VAN":20}
 
@@ -31,30 +31,36 @@ def one_hot_encode(value,size=20):
 
 def model():
     model=Sequential()
-    model.add(Dropout(0.4,input_shape=(44,)))
-    model.add(Dense(44,input_dim=44,kernel_initializer='normal',activation='relu'))
-    model.add(Dense(50,activation='relu'))
-    model.add(Dropout(0.3))
-    model.add(Dense(25,activation='relu'))
-    model.add(Dropout(0.2))
-    model.add(Dense(10,activation='relu'))
+    #model.add(Dropout(0.2,input_shape=(4,)))
+    model.add(Dense(4,input_dim=4,kernel_initializer='normal',activation='sigmoid'))
+   # model.add(Dense(50,activation='relu'))
+   # model.add(Dropout(0.2))
+   # model.add(Dense(25,activation='relu'))
+   # model.add(Dropout(0.1))
+   # model.add(Dense(15,activation='relu'))
+    model.add(Dense(3,activation='relu'))
     model.add(Dense(2,kernel_initializer='normal',activation='softmax'))
-    model.compile(loss='categorical_crossentropy',optimizer='adam')
+    opt=Adagrad(decay=0.001)
+    model.compile(loss='categorical_crossentropy',optimizer=opt)
     return model
 
 win_data=pd.read_csv("owl_scores.csv")
 data=pd.read_csv("map_stats.csv")
 
 #data=pd.read_csv("series_stats.csv")
-x=np.zeros((len(data.index)*4,44))
+x=np.zeros((len(data.index)*4,4))
 y=np.zeros((len(x),2),dtype=float)
 indx=0
 for j,series in enumerate(data.values):
     teamA,teamB=series[0:2]
     for i in range(2,17,4):
-        x[indx][0:20]=one_hot_encode(teamA)
-        x[indx][20:40]=one_hot_encode(teamB)
-        x[indx][40:44]=series[i:i+4]
+        #x[indx][0:20]=one_hot_encode(teamA)
+        #x[indx][20:40]=one_hot_encode(teamB)
+        x[indx][0:4]=series[i:i+4]
+        #x[indx][40]=x[indx][40]/(x[indx][40]+x[indx][41])*100
+        #x[indx][41]=x[indx][41]/(x[indx][40]+x[indx][41])*100
+        #x[indx][42]=x[indx][42]/(x[indx][42]+x[indx][43])*12
+        #x[indx][43]=x[indx][43]/(x[indx][42]+x[indx][43])*12
         score_teamA,score_teamB=win_data.iloc[j,2+(i-2)//2:4+(i-2)//2]
         y[indx][0]=int(score_teamA>score_teamB)
         y[indx][1]=int(score_teamA<score_teamB)
@@ -96,23 +102,27 @@ map4[40:44]=map4_stat
 #map5[20:40]=one_hot_encode(teamB)
 #map5[40:44]=map5_stat
 
-print(nn_win_model.predict(map1.reshape(1,-1)))
-print(nn_win_model.predict(map2.reshape(1,-1)))
-print(nn_win_model.predict(map3.reshape(1,-1)))
-print(nn_win_model.predict(map4.reshape(1,-1)))
+print(nn_win_model.predict(map1_stat.reshape(1,-1)))
+print(nn_win_model.predict(map2_stat.reshape(1,-1)))
+print(nn_win_model.predict(map3_stat.reshape(1,-1)))
+print(nn_win_model.predict(map4_stat.reshape(1,-1)))
 #print(nn_win_model.predict(map5.reshape(1,-1)))
 
-'''
 
+count=0
+win=0
 for indx in range(len(x)):
     x_data=x[indx]
-    print(data.loc[indx,"A":"B"])
     y_data=y[indx]
+    '''
     print("----------------------------")
     print(nn_win_model.predict(x_data.reshape(1,-1)))
     print(y_data)
     print("------------------------------")
-
-
-
-'''
+    '''
+    nn_win_model.predict(x_data.reshape(1,-1))
+    count+=1
+    if(np.argmax(nn_win_model.predict(x_data.reshape(1,-1)))==np.argmax(y_data)):
+        win+=1
+print(win)
+print(count)
