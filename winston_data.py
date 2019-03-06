@@ -175,9 +175,55 @@ match_url=match_urls[0]
 html_data=requests.get(match_url)
 html_data.raise_for_status()
 soup= bs4.BeautifulSoup(html_data.text,features="lxml")
-elems=soup.find_all("table",class_="table table-striped left-side sortable-table match")
-for el in elems:
-    print("__________________________________________________")
-    c = el.find_all("a")
-    for item in c:
-        print(item.contents)
+def away_team():
+    elems=soup.find_all("table",class_="table table-striped left-side sortable-table match")
+    #print(elems)
+    players = {}
+    for el in elems:
+        print("__________________________________________________")
+        names = el.find_all("a")
+        killdeathratio = el.find_all("td", class_="center page1")
+        kills = []
+        deaths = []
+        for index, kdr in enumerate(killdeathratio):
+            if index % 2 == 0:
+                kills.append(kdr)
+            else:
+                deaths.append(kdr)
+        ults = el.find_all("td", class_="center page1 not-in-small")
+        for index, name in enumerate(names):
+            players[str(name.contents)]=[str(kills[index].contents), str(deaths[index].contents), str(ults[index].contents)]
+        for player in players:
+            print("name: "+str(player))
+            print("kills: "+str(players[player][0]))
+            print("deaths: " + str(players[player][1]))
+            print("ults: " + str(players[player][2]))
+        #print(players)
+
+def home_team():
+    elems = soup.find_all("table", class_="table table-striped right-side sortable-table match")
+    #print(elems)
+    players = {}
+    for el in elems:
+        print("__________________________________________________")
+        names = el.find_all("a")
+        killdeathratio = el.find_all("td", class_="center page1")
+        kills = []
+        deaths = []
+        for index, kdr in enumerate(killdeathratio):
+            if index % 2 == 0:
+                kills.append(kdr)
+            else:
+                deaths.append(kdr)
+        ults = el.find_all("td", class_="center page1 not-in-small")
+        for index, name in enumerate(names):
+            players[str(name.contents)] = [str(kills[index].contents), str(deaths[index].contents),
+                                           str(ults[index].contents)]
+        for player in players:
+            print("name: " + str(player))
+            print("kills: " + str(players[player][0]))
+            print("deaths: " + str(players[player][1]))
+            print("ults: " + str(players[player][2]))
+if __name__ == '__main__':
+    away_team()
+    #home_team()
