@@ -164,6 +164,11 @@ tank_players={
     "Yakpung":"TOR",
 }
 
+#lower case versions of dictionaries for key searching
+damage = set(key.lower() for key in dps_players.keys())
+support = set(key.lower() for key in support_players.keys())
+tank = set(key.lower() for key in tank_players.keys())
+
 import bs4
 import requests
 
@@ -191,23 +196,26 @@ def away_team():
         killdeathratio = el.find_all("td", class_="center page1")
         kills = []
         deaths = []
-
         for index, kdr in enumerate(killdeathratio):
             if index % 2 == 0:
                 kills.append(kdr)
             else:
                 deaths.append(kdr)
-
         ults = el.find_all("td", class_="center page1 not-in-small")
         for index, name in enumerate(names):
-            players[str(name.contents)]=[str(kills[index].contents), str(deaths[index].contents), str(ults[index].contents)]
-
+            players[str(name.contents[0])] = [kills[index].contents, deaths[index].contents,
+                                           ults[index].contents]
         for player in players:
-            print("Name: "+str(player))
-            print("Kills: "+str(players[player][0]))
-            print("Deaths: " + str(players[player][1]))
-            print("Ults: " + str(players[player][2]))
-
+            print("Name: " + str(player))
+            if player.lower() in damage:
+                print("Role: Damage")
+            elif player.lower() in support:
+                print("Role: Support")
+            elif player.lower() in tank:
+                print("Role: Tank")
+            print("Kills: " + str(players[player][0][0]))
+            print("Deaths: " + str(players[player][1][0]))
+            print("Ults: " + str(players[player][2][0]))
 def home_team():
     elems = soup.find_all("table", class_="table table-striped right-side sortable-table match")
     players = {}
@@ -235,6 +243,12 @@ def home_team():
                                            ults[index].contents]
         for player in players:
             print("Name: " + str(player))
+            if player.lower() in damage:
+                print("Role: Damage")
+            elif player.lower() in support:
+                print("Role: Support")
+            elif player.lower() in tank:
+                print("Role: Tank")
             print("Kills: " + str(players[player][0][0]))
             print("Deaths: " + str(players[player][1][0]))
             print("Ults: " + str(players[player][2][0]))
