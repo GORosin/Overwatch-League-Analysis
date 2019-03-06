@@ -231,13 +231,13 @@ def home_team():
                 deaths.append(kdr)
         ults = el.find_all("td", class_="center page1 not-in-small")
         for index, name in enumerate(names):
-            players[str(name.contents)] = [str(kills[index].contents), str(deaths[index].contents),
-                                           str(ults[index].contents)]
+            players[str(name.contents[0])] = [kills[index].contents, deaths[index].contents,
+                                           ults[index].contents]
         for player in players:
             print("Name: " + str(player))
-            print("Kills: " + str(players[player][0]))
-            print("Deaths: " + str(players[player][1]))
-            print("Ults: " + str(players[player][2]))
+            print("Kills: " + str(players[player][0][0]))
+            print("Deaths: " + str(players[player][1][0]))
+            print("Ults: " + str(players[player][2][0]))
 
 if __name__ == '__main__':
     away_team()
