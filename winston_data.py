@@ -180,44 +180,8 @@ match_url=match_urls[0]
 html_data=requests.get(match_url)
 html_data.raise_for_status()
 soup= bs4.BeautifulSoup(html_data.text,features="lxml")
-def away_team():
-    elems=soup.find_all("table",class_="table table-striped left-side sortable-table match")
-    players = {}
-    for i, el in enumerate(elems):
-        if i == 0:
-            print("************************************************")
-            print("Match Stats:")
-            print("************************************************")
-        else:
-            print("************************************************")
-            print("Map "+str(i)+" Stats:")
-            print("************************************************")
-        names = el.find_all("a")
-        killdeathratio = el.find_all("td", class_="center page1")
-        kills = []
-        deaths = []
-        for index, kdr in enumerate(killdeathratio):
-            if index % 2 == 0:
-                kills.append(kdr)
-            else:
-                deaths.append(kdr)
-        ults = el.find_all("td", class_="center page1 not-in-small")
-        for index, name in enumerate(names):
-            players[str(name.contents[0])] = [kills[index].contents, deaths[index].contents,
-                                           ults[index].contents]
-        for player in players:
-            print("Name: " + str(player))
-            if player.lower() in damage:
-                print("Role: Damage")
-            elif player.lower() in support:
-                print("Role: Support")
-            elif player.lower() in tank:
-                print("Role: Tank")
-            print("Kills: " + str(players[player][0][0]))
-            print("Deaths: " + str(players[player][1][0]))
-            print("Ults: " + str(players[player][2][0]))
-def home_team():
-    elems = soup.find_all("table", class_="table table-striped right-side sortable-table match")
+def team_stats(side):
+    elems=soup.find_all("table",class_="table table-striped "+side+" sortable-table match")
     players = {}
     for i, el in enumerate(elems):
         if i == 0:
@@ -254,5 +218,5 @@ def home_team():
             print("Ults: " + str(players[player][2][0]))
 
 if __name__ == '__main__':
-    away_team()
-    home_team()
+    team_stats("left-side")
+    team_stats("right-side")
