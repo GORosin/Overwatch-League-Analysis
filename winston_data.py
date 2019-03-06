@@ -178,5 +178,6 @@ soup= bs4.BeautifulSoup(html_data.text,features="lxml")
 elems=soup.find_all("table",class_="table table-striped left-side sortable-table match")
 for el in elems:
     print("__________________________________________________")
-    print(el.find_all("tr"))
-    
+    c = el.find_all("a")
+    for item in c:
+        print(item.contents)
