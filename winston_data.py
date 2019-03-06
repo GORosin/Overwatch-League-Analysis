@@ -177,35 +177,49 @@ html_data.raise_for_status()
 soup= bs4.BeautifulSoup(html_data.text,features="lxml")
 def away_team():
     elems=soup.find_all("table",class_="table table-striped left-side sortable-table match")
-    #print(elems)
     players = {}
-    for el in elems:
-        print("__________________________________________________")
+    for i, el in enumerate(elems):
+        if i == 0:
+            print("************************************************")
+            print("Match Stats:")
+            print("************************************************")
+        else:
+            print("************************************************")
+            print("Map "+str(i)+" Stats:")
+            print("************************************************")
         names = el.find_all("a")
         killdeathratio = el.find_all("td", class_="center page1")
         kills = []
         deaths = []
+
         for index, kdr in enumerate(killdeathratio):
             if index % 2 == 0:
                 kills.append(kdr)
             else:
                 deaths.append(kdr)
+
         ults = el.find_all("td", class_="center page1 not-in-small")
         for index, name in enumerate(names):
             players[str(name.contents)]=[str(kills[index].contents), str(deaths[index].contents), str(ults[index].contents)]
+
         for player in players:
-            print("name: "+str(player))
-            print("kills: "+str(players[player][0]))
-            print("deaths: " + str(players[player][1]))
-            print("ults: " + str(players[player][2]))
-        #print(players)
+            print("Name: "+str(player))
+            print("Kills: "+str(players[player][0]))
+            print("Deaths: " + str(players[player][1]))
+            print("Ults: " + str(players[player][2]))
 
 def home_team():
     elems = soup.find_all("table", class_="table table-striped right-side sortable-table match")
-    #print(elems)
     players = {}
-    for el in elems:
-        print("__________________________________________________")
+    for i, el in enumerate(elems):
+        if i == 0:
+            print("************************************************")
+            print("Match Stats:")
+            print("************************************************")
+        else:
+            print("************************************************")
+            print("Map "+str(i)+" Stats:")
+            print("************************************************")
         names = el.find_all("a")
         killdeathratio = el.find_all("td", class_="center page1")
         kills = []
@@ -220,10 +234,11 @@ def home_team():
             players[str(name.contents)] = [str(kills[index].contents), str(deaths[index].contents),
                                            str(ults[index].contents)]
         for player in players:
-            print("name: " + str(player))
-            print("kills: " + str(players[player][0]))
-            print("deaths: " + str(players[player][1]))
-            print("ults: " + str(players[player][2]))
+            print("Name: " + str(player))
+            print("Kills: " + str(players[player][0]))
+            print("Deaths: " + str(players[player][1]))
+            print("Ults: " + str(players[player][2]))
+
 if __name__ == '__main__':
     away_team()
-    #home_team()
+    home_team()
