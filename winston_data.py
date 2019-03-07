@@ -172,14 +172,7 @@ tank = set(key.lower() for key in tank_players.keys())
 import bs4
 import requests
 
-match_urls=["https://www.winstonslab.com/matches/match.php?id=40"+str(i) for i in range(58,110)]
 
-#for match_rl in match_urls #once we know it works
-
-match_url=match_urls[0]
-html_data=requests.get(match_url)
-html_data.raise_for_status()
-soup= bs4.BeautifulSoup(html_data.text,features="lxml")
 def team_stats(side):
     elems=soup.find_all("table",class_="table table-striped "+side+" sortable-table match")
     players = {}
@@ -218,5 +211,10 @@ def team_stats(side):
             print("Ults: " + str(players[player][2][0]))
 
 if __name__ == '__main__':
-    team_stats("left-side")
-    team_stats("right-side")
+    match_urls = ["https://www.winstonslab.com/matches/match.php?id=40" + str(i) for i in range(58, 110)] # for match_rl in match_urls #once we know it works
+    match_url = match_urls[3]
+    html_data = requests.get(match_url)
+    html_data.raise_for_status()
+    soup = bs4.BeautifulSoup(html_data.text, features="lxml")
+    team_stats("left-side") # away team
+    team_stats("right-side") # home team
