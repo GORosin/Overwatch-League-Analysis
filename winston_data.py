@@ -175,6 +175,21 @@ import re
 import json
 import ast
 
+#format of data list of maps
+#each maps has a dictionary of {map:map_name, player 1:[(hero,time),(hero,time)], player 2:[(hero,time),(hero,time)]...}
+def sort_winstons_data(players_tuple):
+    match_rounds=[{},{},{},{},{}]
+    for dic in players_tuple:
+        this_round=int(dic['gameNumber'])
+        match_rounds[this_round-1]['map']=str(dic['map'])
+        if dic['playerName'] in match_rounds[this_round-1]:
+            match_rounds[this_round-1][dic['playerName']].append((str(dic['hero']),int(dic['timePlayed'])))
+        else:
+            match_rounds[this_round-1][dic['playerName']]=[(str(dic['hero']),int(dic['timePlayed']))]
+
+    return match_rounds
+
+
 def team_stats(side):
     elems=soup.find_all("table",class_="table table-striped "+side+" sortable-table match")
     players = {}
@@ -212,14 +227,6 @@ def team_stats(side):
             print("Deaths: " + str(players[player][1][0]))
             print("Ults: " + str(players[player][2][0]))
 
-def get_comp():
-    for dic in players_tuple:
-        print("-------------------------")
-        print("team:" + str(dic['teamName']))
-        print("player name:" + str(dic['playerName']))
-        print("map : " + str(dic['gameNumber']) + " -- " + str(dic['map']))
-        print("hero :  " + str(dic['hero']))
-        print("time played " + str(int(dic['timePlayed']) // 60) + ":" + str(int(dic['timePlayed']) % 60))
 
 if __name__ == '__main__':
     print("************************************************")
@@ -227,14 +234,20 @@ if __name__ == '__main__':
     print("************************************************")
 
     match_urls = ["https://www.winstonslab.com/matches/match.php?id=40" + str(i) for i in range(58, 110)] # for match_rl in match_urls #once we know it works
-    match_url = match_urls[3]
+    match_url=match_urls[0]
     html_data = requests.get(match_url)
     html_data.raise_for_status()
     soup = bs4.BeautifulSoup(html_data.text, features="lxml")
     parsed_html = [line for line in html_data.text.split('\n') if 'heroStatsArr.concat' in line]
     data = re.split(r"\(|\)", parsed_html[0])[1][1:-1]
     players_tuple = ast.literal_eval(data)
-
-    get_comp()
-    team_stats("left-side") # away team
-    team_stats("right-side") # home team
+    sorted_data= sort_winstons_data(players_tuple)
+    for round_map in sorted_data:
+        if not round_map:
+            break
+        
+        print('map '+str(round_map['map']))
+        print('my man '+str(round_map['Eqo']))
+    #get_comp(players_tuple)
+    #team_stats("left-side") # away team
+    #team_stats("right-side") # home team
