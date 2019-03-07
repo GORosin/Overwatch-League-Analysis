@@ -165,9 +165,10 @@ tank_players={
 }
 
 #lower case versions of dictionaries for key searching
-damage = set(key.lower() for key in dps_players.keys())
-support = set(key.lower() for key in support_players.keys())
-tank = set(key.lower() for key in tank_players.keys())
+damage = dict((key.lower(),value) for key,value in dps_players.items())
+support = dict((key.lower(),value) for key,value in support_players.items())
+tank = dict((key.lower(),value) for key,value in tank_players.items())
+all_players={**damage,**support,**tank}
 
 import bs4
 import requests
@@ -190,12 +191,12 @@ def sort_winstons_data(players_tuple):
     return match_rounds
 
 def hero_play_time(round_data,team):
-    heroes={'Reinhardt':0,'Winston':0,'Orisa':0,'Hammond':0,'Zarya':0,'Dva':0,'Roadhog':0,'Widowmaker':0,"Tracer":0,"Sombra":0,"Phara":0,"Other":0,"Brigitte":0,"Ana":0,"Zenyatta":0,"Mercy":0,"Lucio":0,"Moira":0,"Mccree":0,"Other":0}
+    heroes={'Reinhardt':0,'Winston':0,'Orisa':0,'Hammond':0,'Zarya':0,'D.Va':0,'Roadhog':0,'Widowmaker':0,"Tracer":0,"Sombra":0,"Pharah":0,"Other":0,"Brigitte":0,"Ana":0,"Zenyatta":0,"Mercy":0,"Lucio":0,"Moira":0,"Mccree":0,"Other":0}
     total_time=0
     for player,hero_list in round_data.items():
         if player=='map':
             continue
-        if team!="LDN": #fix this later
+        if all_players[player.lower()]!=team:
             continue
         for hero in hero_list:
             if hero[0] not in heroes:
@@ -205,7 +206,7 @@ def hero_play_time(round_data,team):
             total_time+=hero[1]
 
     total_time=total_time/6.0
-    heroes = dict((k, v/total_time) for k, v in heroes.items())
+    heroes = dict((k, round(v/total_time,4)) for k, v in heroes.items())
     print(heroes)
             
 
@@ -264,7 +265,7 @@ if __name__ == '__main__':
 
         
     match_urls = ["https://www.winstonslab.com/matches/match.php?id=40" + str(i) for i in range(58, 110)] # for match_rl in match_urls #once we know it works
-    match_url=match_urls[3]
+    match_url=match_urls[0]
     html_data = requests.get(match_url)
     html_data.raise_for_status()
     soup = bs4.BeautifulSoup(html_data.text, features="lxml")
@@ -273,14 +274,16 @@ if __name__ == '__main__':
     players_tuple = ast.literal_eval(data)
     sorted_data= sort_winstons_data(players_tuple)
 
+    '''
     for round_map in sorted_data:
         if not round_map:
             break
         print('map '+str(round_map['map']))
-        print('my man '+str(round_map['Gesture']))
-
-    hero_play_time(sorted_data[0],'LDN')
+        print('my man '+str(round_map['Poko']))
+    '''
+    
+    hero_play_time(sorted_data[0],'PHI')
 
     #get_comp(players_tuple)
-    team_stats("left-side",sorted_data) # away team
-    team_stats("right-side",sorted_data) # home team
+    #team_stats("left-side",sorted_data) # away team
+    #team_stats("right-side",sorted_data) # home team
