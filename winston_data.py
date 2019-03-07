@@ -200,7 +200,7 @@ def hero_play_time(round_data,team):
             continue
         for hero in hero_list:
             if hero[0] not in heroes:
-                heroes['Other']+hero[1]
+                heroes['Other']=+hero[1]
             else:
                 heroes[hero[0]]+=hero[1]
             total_time+=hero[1]
@@ -282,7 +282,7 @@ if __name__ == '__main__':
         print('my man '+str(round_map['Poko']))
     '''
     
-    hero_play_time(sorted_data[0],'PHI')
+    hero_play_time(sorted_data[2],'LDN')
 
     #get_comp(players_tuple)
     #team_stats("left-side",sorted_data) # away team
