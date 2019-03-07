@@ -171,7 +171,9 @@ tank = set(key.lower() for key in tank_players.keys())
 
 import bs4
 import requests
-
+import re
+import json
+import ast
 
 def team_stats(side):
     elems=soup.find_all("table",class_="table table-striped "+side+" sortable-table match")
@@ -210,11 +212,29 @@ def team_stats(side):
             print("Deaths: " + str(players[player][1][0]))
             print("Ults: " + str(players[player][2][0]))
 
+def get_comp():
+    for dic in players_tuple:
+        print("-------------------------")
+        print("team:" + str(dic['teamName']))
+        print("player name:" + str(dic['playerName']))
+        print("map : " + str(dic['gameNumber']) + " -- " + str(dic['map']))
+        print("hero :  " + str(dic['hero']))
+        print("time played " + str(int(dic['timePlayed']) // 60) + ":" + str(int(dic['timePlayed']) % 60))
+
 if __name__ == '__main__':
+    print("************************************************")
+    print("IMAGINATION IS THE ESSENCE OF DISCOVERY")
+    print("************************************************")
+
     match_urls = ["https://www.winstonslab.com/matches/match.php?id=40" + str(i) for i in range(58, 110)] # for match_rl in match_urls #once we know it works
     match_url = match_urls[3]
     html_data = requests.get(match_url)
     html_data.raise_for_status()
     soup = bs4.BeautifulSoup(html_data.text, features="lxml")
+    parsed_html = [line for line in html_data.text.split('\n') if 'heroStatsArr.concat' in line]
+    data = re.split(r"\(|\)", parsed_html[0])[1][1:-1]
+    players_tuple = ast.literal_eval(data)
+
+    get_comp()
     team_stats("left-side") # away team
     team_stats("right-side") # home team
