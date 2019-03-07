@@ -190,7 +190,7 @@ def sort_winstons_data(players_tuple):
     return match_rounds
 
 
-def team_stats(side):
+def team_stats(side,data):
     elems=soup.find_all("table",class_="table table-striped "+side+" sortable-table match")
     players = {}
     for i, el in enumerate(elems):
@@ -216,16 +216,25 @@ def team_stats(side):
             players[str(name.contents[0])] = [kills[index].contents, deaths[index].contents,
                                            ults[index].contents]
         for player in players:
-            print("Name: " + str(player))
-            if player.lower() in damage:
-                print("Role: Damage")
-            elif player.lower() in support:
-                print("Role: Support")
-            elif player.lower() in tank:
-                print("Role: Tank")
-            print("Kills: " + str(players[player][0][0]))
-            print("Deaths: " + str(players[player][1][0]))
-            print("Ults: " + str(players[player][2][0]))
+            if player in data[i-1] or i == 0 :
+                print("Name: " + str(player))
+                if player.lower() in damage:
+                    print("Role: Damage")
+                elif player.lower() in support:
+                    print("Role: Support")
+                elif player.lower() in tank:
+                    print("Role: Tank")
+                print("Kills: " + str(players[player][0][0]))
+                print("Deaths: " + str(players[player][1][0]))
+                print("Ults: " + str(players[player][2][0]))
+
+def round_map_data(data):
+    for round_map in data:
+        if not round_map:
+            break
+
+        print('map ' + str(round_map['map']))
+        print('my man ' + str(round_map['Eqo']))
 
 
 if __name__ == '__main__':
@@ -234,7 +243,7 @@ if __name__ == '__main__':
     print("************************************************")
 
     match_urls = ["https://www.winstonslab.com/matches/match.php?id=40" + str(i) for i in range(58, 110)] # for match_rl in match_urls #once we know it works
-    match_url=match_urls[0]
+    match_url=match_urls[3]
     html_data = requests.get(match_url)
     html_data.raise_for_status()
     soup = bs4.BeautifulSoup(html_data.text, features="lxml")
@@ -242,12 +251,6 @@ if __name__ == '__main__':
     data = re.split(r"\(|\)", parsed_html[0])[1][1:-1]
     players_tuple = ast.literal_eval(data)
     sorted_data= sort_winstons_data(players_tuple)
-    for round_map in sorted_data:
-        if not round_map:
-            break
-        
-        print('map '+str(round_map['map']))
-        print('my man '+str(round_map['Eqo']))
     #get_comp(players_tuple)
-    #team_stats("left-side") # away team
-    #team_stats("right-side") # home team
+    team_stats("left-side",sorted_data) # away team
+    team_stats("right-side",sorted_data) # home team
