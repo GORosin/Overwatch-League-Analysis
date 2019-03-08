@@ -178,6 +178,7 @@ import ast
 
 #format of data list of maps
 #each maps has a dictionary of {map:map_name, player 1:[(hero,time),(hero,time)], player 2:[(hero,time),(hero,time)]...}
+
 def sort_winstons_data(players_tuple):
     match_rounds=[{},{},{},{},{}]
     for dic in players_tuple:
@@ -207,8 +208,24 @@ def hero_play_time(round_data,team):
 
     total_time=total_time/6.0
     heroes = dict((k, round(v/total_time,4)) for k, v in heroes.items())
-    print(heroes)
-            
+    return heroes
+
+def calculate_comp(hero_times):
+    three_three=hero_times['Zarya']
+    goats=hero_times['Reinhardt']
+    winston_goats=three_three-goats-hero_times['Orisa']
+    dive=hero_times['Winston']-winston_goats
+    sombra_goats=hero_times['Zarya']-hero_times['D.Va'] if hero_times['Zarya']>hero_times['D.Va'] else 0
+    savta_goats=hero_times['Zarya']-hero_times['Brigitte'] if hero_times['Zarya']>hero_times['Brigitte'] else 0
+    #I wasn't cut out for retirement anyways.	
+    total_dps=(hero_times['Widowmaker']+hero_times['Tracer'])/2
+    wrecking_crew=total_dps-dive
+    return {"Dive":round(dive,3),
+            "Goats":round(goats,3),
+            "Winston_Goats":round(winston_goats,3),
+            "Sombra":round(sombra_goats,3),
+            "Savta":round(savta_goats,3),
+            "Wrecking_Crew":round(wrecking_crew,3)}
 
 def team_stats(side,data):
     elems=soup.find_all("table",class_="table table-striped "+side+" sortable-table match")
@@ -264,7 +281,7 @@ if __name__ == '__main__':
 
 
         
-    match_urls = ["https://www.winstonslab.com/matches/match.php?id=40" + str(i) for i in range(58, 110)] # for match_rl in match_urls #once we know it works
+    match_urls = ["https://www.winstonslab.com/matches/match.php?id=40" + str(i) for i in range(58, 110)]
     match_url=match_urls[0]
     html_data = requests.get(match_url)
     html_data.raise_for_status()
@@ -282,8 +299,8 @@ if __name__ == '__main__':
         print('my man '+str(round_map['Poko']))
     '''
     
-    hero_play_time(sorted_data[2],'LDN')
-
+    hero_times=hero_play_time(sorted_data[2],'LDN')
+    print(calculate_comp(hero_times))
     #get_comp(players_tuple)
     #team_stats("left-side",sorted_data) # away team
     #team_stats("right-side",sorted_data) # home team
