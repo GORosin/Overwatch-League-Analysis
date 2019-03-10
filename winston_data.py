@@ -223,8 +223,8 @@ def calculate_comp(hero_times):
     return {"Dive":round(dive,3),
             "Goats":round(goats,3),
             "Winston_Goats":round(winston_goats,3),
-            "Sombra":round(sombra_goats,3),
-            "Savta":round(savta_goats,3),
+            "Sombra Goats":round(sombra_goats,3),
+            "Savta Goats":round(savta_goats,3),
             "Wrecking_Crew":round(wrecking_crew,3)}
 
 def team_stats(side,data):
