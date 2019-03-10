@@ -8,8 +8,8 @@ from sklearn.utils import shuffle
 teams={"PHI":1000,"LDN":1000,"BOS":1000,"NYE":1000,"PAR":1000,"GLA":1000,"SHD":1000,"DAL":1000,"CDH":1000,"VAL":1000,"SEO":1000,"HZS":1000,"GZC":1000,"TOR":1000,"WAS":1000,"HOU":1000,"ATL":1000,"FLA":1000,"SFS":1000,"VAN":1000}
 
 my_team=[1000]
-team_name='DAL'
-def update_scores(teamA,teamB,scoreA,scoreB,update=32):
+team_name='SEO'
+def update_scores(teamA,teamB,scoreA,scoreB,update=30):
     global teams
     QA=10**(teams[teamA]/400)
     QB=10**(teams[teamB]/400)
@@ -42,7 +42,7 @@ def loop_matchs(owl_data):
     global teams
     global team_name
     global my_team
-    for series in owl_data.values[::-1]:
+    for series in owl_data.values:
         loop_series(series)
         if team_name in series[0:2]:
             print(series[0:2])
