@@ -52,18 +52,18 @@ def loop_matchs(owl_data):
 def rank_teams():
     global teams
     owl_data=pd.read_csv("owl_scores.csv")
-    owl_data=shuffle(owl_data)
+    #owl_data=shuffle(owl_data)
     #plot out how a team looks after every match
 
     #number of iterations
-    for i in range(1):
+    for i in range(50):
         loop_matchs(owl_data)
     
     plt.plot(range(len(my_team)),my_team)
     plt.show()
     rankings= sorted(teams.items(), key=operator.itemgetter(1))
     for i in rankings[::-1]:
-        print("team:"+str(i[0])+" elo:"+str(i[1]))
+        print("team:"+str(i[0])+" elo:"+str(int(i[1])))
 
 def flip_coin(p):
     return int(random.random() < p)
@@ -102,10 +102,10 @@ def predict(teamA,teamB):
     plt.legend()
     plt.show()
 
-rank_teams()
-#predict('NYE',"CDH")
 def tie_study():
     rates=[42.0,12.0,40.0,19.0]
     probs=[1/(1+10**(i/400.0)) for i in rates]
     print(probs)
 
+if __name__ == '__main__':
+    rank_teams()
