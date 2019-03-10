@@ -3,6 +3,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import operator
 import random
+from sklearn.utils import shuffle
 
 teams={"PHI":1000,"LDN":1000,"BOS":1000,"NYE":1000,"PAR":1000,"GLA":1000,"SHD":1000,"DAL":1000,"CDH":1000,"VAL":1000,"SEO":1000,"HZS":1000,"GZC":1000,"TOR":1000,"WAS":1000,"HOU":1000,"ATL":1000,"FLA":1000,"SFS":1000,"VAN":1000}
 
@@ -51,7 +52,7 @@ def loop_matchs(owl_data):
 def rank_teams():
     global teams
     owl_data=pd.read_csv("owl_scores.csv")
-
+    owl_data=shuffle(owl_data)
     #plot out how a team looks after every match
 
     #number of iterations
