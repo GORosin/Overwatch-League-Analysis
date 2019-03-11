@@ -9,8 +9,12 @@ teams={"PHI":1000,"LDN":1000,"BOS":1000,"NYE":1000,"PAR":1000,"GLA":1000,"SHD":1
 
 my_team=[1000]
 team_name='SEO'
+update_config=30
 def update_scores(teamA,teamB,scoreA,scoreB,update=30):
     global teams
+    global update_config
+    update=update_config
+    
     QA=10**(teams[teamA]/400)
     QB=10**(teams[teamB]/400)
     ExpectedA=QA/(QA+QB)
@@ -49,14 +53,16 @@ def loop_matchs(owl_data):
             my_team.append(teams[team_name])
     return
 
-def rank_teams():
+def rank_teams(iterations,update):
     global teams
+    global update_config
+    update_config=update
     owl_data=pd.read_csv("owl_scores.csv")
     #owl_data=shuffle(owl_data)
     #plot out how a team looks after every match
 
     #number of iterations
-    for i in range(50):
+    for i in range(iterations):
         loop_matchs(owl_data)
     
     plt.plot(range(len(my_team)),my_team)
@@ -64,7 +70,7 @@ def rank_teams():
     rankings= sorted(teams.items(), key=operator.itemgetter(1))
     for i in rankings[::-1]:
         print("team:"+str(i[0])+" elo:"+str(int(i[1])))
-
+    return rankings
 def flip_coin(p):
     return int(random.random() < p)
 
