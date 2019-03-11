@@ -22,7 +22,8 @@ class MyApp(QMainWindow):
         self.ui.Team2Round4.setText('0')
         self.ui.Team2Round5.setText('0')
         self.ui.AddMatch.clicked.connect(self.update_scores)
-
+        self.ui.iterations.setText("10")
+        self.ui.update.setText("30")
         self.ui.calculate.clicked.connect(self.DisplayRanking)
 
     def DisplayRanking(self):
