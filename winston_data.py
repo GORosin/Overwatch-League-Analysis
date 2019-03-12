@@ -290,7 +290,10 @@ if __name__ == '__main__':
     data = re.split(r"\(|\)", parsed_html[0])[1][1:-1]
     players_tuple = ast.literal_eval(data)
     sorted_data= sort_winstons_data(players_tuple)
-
+    kdd = soup.find_all("td", class_=re.compile("center page1 k-d-diff.* not-in-small"))
+    for k in kdd:
+        print(k.contents[0].strip())
+        
     '''
     for round_map in sorted_data:
         if not round_map:
@@ -299,8 +302,8 @@ if __name__ == '__main__':
         print('my man '+str(round_map['Poko']))
     '''
     
-    hero_times=hero_play_time(sorted_data[2],'LDN')
-    print(calculate_comp(hero_times))
+    #hero_times=hero_play_time(sorted_data[2],'LDN')
+    #print(calculate_comp(hero_times))
     #get_comp(players_tuple)
     #team_stats("left-side",sorted_data) # away team
     #team_stats("right-side",sorted_data) # home team
