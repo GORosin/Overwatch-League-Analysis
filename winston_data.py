@@ -243,6 +243,9 @@ def team_stats(side,data):
         killdeathratio = el.find_all("td", class_="center page1")
         kills = []
         deaths = []
+        kdd = el.find_all("td", class_=re.compile("center page1 k-d-diff.* not-in-small"))
+        #for k in kdd:
+         #   print(k.contents[0].strip())
         for index, kdr in enumerate(killdeathratio):
             if index % 2 == 0:
                 kills.append(kdr)
@@ -251,7 +254,7 @@ def team_stats(side,data):
         ults = el.find_all("td", class_="center page1 not-in-small")
         for index, name in enumerate(names):
             players[str(name.contents[0])] = [kills[index].contents, deaths[index].contents,
-                                           ults[index].contents]
+                                           ults[index].contents,kdd[index].contents]
         for player in players:
             if player in data[i-1] or i == 0 :
                 print("Name: " + str(player))
@@ -264,6 +267,7 @@ def team_stats(side,data):
                 print("Kills: " + str(players[player][0][0]))
                 print("Deaths: " + str(players[player][1][0]))
                 print("Ults: " + str(players[player][2][0]))
+                print("First Kills - Deaths: "+ str(players[player][3][0].strip()))
 
 def round_map_data(data):
     for round_map in data:
@@ -290,9 +294,7 @@ if __name__ == '__main__':
     data = re.split(r"\(|\)", parsed_html[0])[1][1:-1]
     players_tuple = ast.literal_eval(data)
     sorted_data= sort_winstons_data(players_tuple)
-    kdd = soup.find_all("td", class_=re.compile("center page1 k-d-diff.* not-in-small"))
-    for k in kdd:
-        print(k.contents[0].strip())
+
         
     '''
     for round_map in sorted_data:
@@ -305,5 +307,5 @@ if __name__ == '__main__':
     #hero_times=hero_play_time(sorted_data[2],'LDN')
     #print(calculate_comp(hero_times))
     #get_comp(players_tuple)
-    #team_stats("left-side",sorted_data) # away team
+    team_stats("left-side",sorted_data) # away team
     #team_stats("right-side",sorted_data) # home team
