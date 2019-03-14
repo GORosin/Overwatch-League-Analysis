@@ -30,13 +30,20 @@ class MyApp(QMainWindow):
         try:
             iterations=int(self.ui.iterations.toPlainText())
         except:
+            print("using default iterations")
             iterations=10
         try:
             update=int(self.ui.update.toPlainText())
         except:
+            print("using default update")
             update=30
-        
-        rankings=rank_teams(iterations,update)
+        try:
+            penalty=float(self.ui.throw.toPlainText())
+        except:
+            penalty=1.0
+            print("using default penalty")
+            
+        rankings=rank_teams(iterations,update,penalty)
         ranks=""
         for i in rankings[::-1]:
             ranks+="team:"+str(i[0])+" elo:"+str(int(i[1]))+"\n"

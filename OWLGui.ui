@@ -338,7 +338,7 @@
       <string>Throw Penalty</string>
      </property>
     </widget>
-    <widget class="QTextEdit" name="throw_2">
+    <widget class="QTextEdit" name="throw">
      <property name="geometry">
       <rect>
        <x>120</x>
