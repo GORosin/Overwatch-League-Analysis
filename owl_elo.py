@@ -65,53 +65,9 @@ def rank_teams(iterations,update):
     for i in range(iterations):
         loop_matchs(owl_data)
     
-    plt.plot(range(len(my_team)),my_team)
-    plt.show()
+    #plt.plot(range(len(my_team)),my_team)
+    #plt.show()
     rankings= sorted(teams.items(), key=operator.itemgetter(1))
     for i in rankings[::-1]:
         print("team:"+str(i[0])+" elo:"+str(int(i[1])))
     return rankings
-def flip_coin(p):
-    return int(random.random() < p)
-
-def simulate_series(p_a):
-    score_a=0
-    score_b=0
-    for i in range(4):
-        results=flip_coin(p_a)
-        score_a+=results
-        score_b+=1-results
-    if(score_a==score_b):
-        result=flip_coin(p_a)
-        score_a+=result
-        score_b+=1-result
-    return (score_a,score_b)
-
-def calc_mean(dist):
-    return np.sum(dist*np.linspace(0,4,5))
-
-def predict(teamA,teamB):
-    #using monte carlo
-    p_a=1/(1+10**((teams[teamB]-teams[teamA])/400))
-    scores_A=np.zeros(5)
-    scores_B=np.zeros(5)
-    for i in range(100000):
-        a,b=simulate_series(p_a)
-        scores_A[a]+=1
-        scores_B[b]+=1
-    scores_A=scores_A/np.sum(scores_A)
-    scores_B=scores_B/np.sum(scores_B)
-    print(scores_A)
-    print(calc_mean(scores_A),calc_mean(scores_B))
-    plt.bar(np.linspace(0,4,5),scores_A,label=teamA)
-    plt.bar(np.linspace(0,4,5),scores_B,label=teamB,alpha=0.5)
-    plt.legend()
-    plt.show()
-
-def tie_study():
-    rates=[42.0,12.0,40.0,19.0]
-    probs=[1/(1+10**(i/400.0)) for i in rates]
-    print(probs)
-
-if __name__ == '__main__':
-    rank_teams()
