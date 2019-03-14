@@ -49,7 +49,7 @@ def predict(teamA,teamB):
     plt.bar(np.linspace(1,6,6),A_hist.data[1:-1]/iterations,width=0.30,label=teamA)
     plt.bar(np.linspace(1,6,6)+0.30,B_hist.data[1:-1]/iterations,width=0.30,label=teamB)
     plt.xticks(np.linspace(1,6,6)+ 0.3, ('0-4', '1-3', '2-3', '3-1','3-1','4-0'))
-    plt.text(2.2,.5,"Team A Win:"+str(round(np.sum(A_hist.data[4:7]/iterations),2))+" team B Wins:"+str(round(np.sum(A_hist.data[1:4]/iterations),2)),bbox=dict(boxstyle="round",ec=(1., 0.5, 0.5),fc=(1., 0.8, 0.8),))
+    plt.text(2.2,.5,teamA+" Win:"+str(round(np.sum(A_hist.data[4:7]/iterations),2))+" "+teamB+" Wins:"+str(round(np.sum(A_hist.data[1:4]/iterations),2)),bbox=dict(boxstyle="round",ec=(1., 0.5, 0.5),fc=(1., 0.8, 0.8),))
     plt.legend()
     plt.show()
 
