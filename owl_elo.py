@@ -6,56 +6,46 @@ import random
 from sklearn.utils import shuffle
 
 update_config=0
-penalty=0
 elo_reduction=0;
+team_map_diff={"PHI":0,"LDN":0,"BOS":0,"NYE":0,"PAR":0,"GLA":0,
+           "SHD":0,"DAL":0,"CDH":0,"VAL":0,"SEO":0,"HZS":0,
+           "GZC":0,"TOR":0,"WAS":0,"HOU":0,"ATL":0,"FLA":0,
+           "SFS":0,"VAN":0}
 def update_scores(teamA,teamB,scoreA,scoreB,teams,update=30):
-    
     QA=10**(teams[teamA]/400)
     QB=10**(teams[teamB]/400)
-
-    QA=(QA+elo_reduction*QB)/(1+elo_reduction)
-    QB=(QB+elo_reduction*QA)/(1+elo_reduction)
+    QA,QB=(QA+elo_reduction*QB)/(1+elo_reduction),(QB+elo_reduction*QA)/(1+elo_reduction)
     
     ExpectedA=QA/(QA+QB)
     ExpectedB=QB/(QA+QB)
-
     #so two ways to calculate scores, either normalize them
     #normA=scoreA/(scoreA+scoreB)
     #normB=scoreB/(scoreA+scoreB)
-
     #or 1 for win 0 for loss 0.5 for draw
     if(scoreA==scoreB):
         normA,normB=0.5,0.5
     else:
-        normA=float(scoreA>scoreB)
-        normB=float(scoreA<scoreB)
+        normA= 1 if scoreA>scoreB else 0
+        normB=1 if scoreA<scoreB else 0
     teams[teamA]+=update*(normA-ExpectedA)
     teams[teamB]+=update*(normB-ExpectedB)
 
 def loop_series(series,teams):
     teamA,teamB=series[0:2]
-    score=0
     for i in range(2,9,2):
         scoreA,scoreB=series[i:i+2]
-        if(score==3 or score ==-3):
-            update_scores(teamA,teamB,scoreA,scoreB,teams,update=update_config*penalty)
-        else:
-            update_scores(teamA,teamB,scoreA,scoreB,teams,update_config)
-        score+=int(scoreA>scoreB)-int(scoreA<scoreB)
-
-    if not (series[9]==series[10]):
-        update_scores(teamA,teamB,series[9],series[10],teams)
+        update_scores(teamA,teamB,scoreA,scoreB,teams,update_config)
+    if not (series[10]==series[11]):
+        update_scores(teamA,teamB,series[10],series[11],teams,update=update_config)
 
 def loop_matchs(owl_data,teams):
     for series in owl_data.values:
         loop_series(series,teams)
     return
 
-def rank_teams(iterations,update,map_penalty,elo_coeff=0):
-    global elo_reduction=elo_coeff
-    global teams
-    global penalty
-    penalty=map_penalty
+def rank_teams(iterations,update,elo_coeff=0):
+    global elo_reduction
+    elo_reduction =elo_coeff
     global update_config
     update_config=update
     owl_data=pd.read_csv("owl_scores.csv")
@@ -73,8 +63,11 @@ def rank_teams(iterations,update,map_penalty,elo_coeff=0):
     #plt.plot(range(len(my_team)),my_team)
     #plt.show()
     rankings= sorted(teams.items(), key=operator.itemgetter(1))
-    '''
+
+    return rankings
+
+if __name__=="__main__":
+    rankings=rank_teams(30,20,0)
     for i in rankings[::-1]:
         print("team:"+str(i[0])+" elo:"+str(int(i[1])))
-    '''
-    return rankings
+

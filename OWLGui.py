@@ -38,19 +38,13 @@ class MyApp(QMainWindow):
             print("using default update")
             update=30
         try:
-            penalty=float(self.ui.throw.toPlainText())
-        except:
-            penalty=1.0
-            print("using default penalty")
-
-        try:
             elo_reduction=float(self.ui.reduction.toPlainText())
             if elo_reduction > 1 or elo_reduction <0:
                 raise ValueError
         except:
             elo_reduction=0
             print("using default elo reduction")
-        rankings=rank_teams(iterations,update,penalty,elo_reduction)
+        rankings=rank_teams(iterations,update,elo_reduction)
         ranks=""
         for i in rankings[::-1]:
             ranks+="team:"+str(i[0])+" elo:"+str(int(i[1]))+"\n"
