@@ -5,14 +5,17 @@ import operator
 import random
 from sklearn.utils import shuffle
 
-
-
 update_config=0
 penalty=0
+elo_reduction=0;
 def update_scores(teamA,teamB,scoreA,scoreB,teams,update=30):
     
     QA=10**(teams[teamA]/400)
     QB=10**(teams[teamB]/400)
+
+    QA=(QA+elo_reduction*QB)/(1+elo_reduction)
+    QB=(QB+elo_reduction*QA)/(1+elo_reduction)
+    
     ExpectedA=QA/(QA+QB)
     ExpectedB=QB/(QA+QB)
 
@@ -48,7 +51,8 @@ def loop_matchs(owl_data,teams):
         loop_series(series,teams)
     return
 
-def rank_teams(iterations,update,map_penalty):
+def rank_teams(iterations,update,map_penalty,elo_coeff=0):
+    global elo_reduction=elo_coeff
     global teams
     global penalty
     penalty=map_penalty

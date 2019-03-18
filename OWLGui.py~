@@ -1,7 +1,6 @@
 from PyQt5.QtWidgets import QMainWindow, QApplication
 from PyQt5 import uic
 import sys
-from owl_elo import rank_teams
 Ui_MainWindow, QtBaseClass = uic.loadUiType("OWLGui.ui")
 
 
@@ -22,40 +21,7 @@ class MyApp(QMainWindow):
         self.ui.Team2Round4.setText('0')
         self.ui.Team2Round5.setText('0')
         self.ui.AddMatch.clicked.connect(self.update_scores)
-        self.ui.iterations.setText("10")
-        self.ui.update.setText("30")
-        self.ui.calculate.clicked.connect(self.DisplayRanking)
 
-    def DisplayRanking(self):
-        try:
-            iterations=int(self.ui.iterations.toPlainText())
-        except:
-            print("using default iterations")
-            iterations=10
-        try:
-            update=int(self.ui.update.toPlainText())
-        except:
-            print("using default update")
-            update=30
-        try:
-            penalty=float(self.ui.throw.toPlainText())
-        except:
-            penalty=1.0
-            print("using default penalty")
-
-        try:
-            elo_reduction=float(self.ui.reduction.toPlainText())
-            if elo_reduction > 1 or elo_reduction <0:
-                raise ValueError
-        except:
-            elo_reduction=0
-            print("using default elo reduction")
-        rankings=rank_teams(iterations,update,penalty,elo_reduction)
-        ranks=""
-        for i in rankings[::-1]:
-            ranks+="team:"+str(i[0])+" elo:"+str(int(i[1]))+"\n"
-            
-        self.ui.DisplayRank.setText(ranks)
     def update_scores(self):
         team1=self.ui.Team1.toPlainText().upper()
         team2=self.ui.Team2.toPlainText().upper()

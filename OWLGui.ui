@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>800</width>
-    <height>600</height>
+    <width>833</width>
+    <height>691</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -269,7 +269,7 @@
      <rect>
       <x>60</x>
       <y>430</y>
-      <width>251</width>
+      <width>381</width>
       <height>181</height>
      </rect>
     </property>
@@ -348,6 +348,29 @@
       </rect>
      </property>
     </widget>
+    <widget class="QTextEdit" name="reduction">
+     <property name="geometry">
+      <rect>
+       <x>270</x>
+       <y>120</y>
+       <width>81</width>
+       <height>31</height>
+      </rect>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_10">
+     <property name="geometry">
+      <rect>
+       <x>270</x>
+       <y>90</y>
+       <width>91</width>
+       <height>20</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Elo reduction</string>
+     </property>
+    </widget>
    </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
@@ -355,7 +378,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>800</width>
+     <width>833</width>
      <height>20</height>
     </rect>
    </property>

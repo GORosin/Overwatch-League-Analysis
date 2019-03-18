@@ -31,16 +31,16 @@ def one_hot_encode(value,size=20):
 
 def model():
     model=Sequential()
-    #model.add(Dropout(0.2,input_shape=(4,)))
+    model.add(Dropout(0.2,input_shape=(4,)))
     model.add(Dense(4,input_dim=4,kernel_initializer='normal',activation='sigmoid'))
-   # model.add(Dense(50,activation='relu'))
+   model.add(Dense(50,activation='relu'))
    # model.add(Dropout(0.2))
    # model.add(Dense(25,activation='relu'))
    # model.add(Dropout(0.1))
    # model.add(Dense(15,activation='relu'))
     model.add(Dense(3,activation='relu'))
     model.add(Dense(2,kernel_initializer='normal',activation='softmax'))
-    opt=Adagrad(decay=0.001)
+    opt=Adagrad(lr=0.1,decay=0.01)
     model.compile(loss='categorical_crossentropy',optimizer=opt)
     return model
 
