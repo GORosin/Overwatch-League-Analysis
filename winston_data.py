@@ -227,47 +227,65 @@ def calculate_comp(hero_times):
             "Savta Goats":round(savta_goats,3),
             "Wrecking_Crew":round(wrecking_crew,3)}
 
-def team_stats(side,data):
+def team_stats(side,data,csv):
     elems=soup.find_all("table",class_="table table-striped "+side+" sortable-table match")
     players = {}
-    for i, el in enumerate(elems):
-        if i == 0:
-            print("************************************************")
-            print("Match Stats:")
-            print("************************************************")
-        else:
-            print("************************************************")
-            print("Map "+str(i)+" Stats:")
-            print("************************************************")
-        names = el.find_all("a")
-        killdeathratio = el.find_all("td", class_="center page1")
-        kills = []
-        deaths = []
-        kdd = el.find_all("td", class_=re.compile("center page1 k-d-diff.* not-in-small"))
-        #for k in kdd:
-         #   print(k.contents[0].strip())
-        for index, kdr in enumerate(killdeathratio):
-            if index % 2 == 0:
-                kills.append(kdr)
+    with open (csv,'a') as sheet:
+        for i, el in enumerate(elems):
+            '''
+            if i == 0:
+                print("************************************************")
+                print("Match Stats:")
+                print("************************************************")
             else:
-                deaths.append(kdr)
-        ults = el.find_all("td", class_="center page1 not-in-small")
-        for index, name in enumerate(names):
-            players[str(name.contents[0])] = [kills[index].contents, deaths[index].contents,
-                                           ults[index].contents,kdd[index].contents]
-        for player in players:
-            if player in data[i-1] or i == 0 :
-                print("Name: " + str(player))
-                if player.lower() in damage:
-                    print("Role: Damage")
-                elif player.lower() in support:
-                    print("Role: Support")
-                elif player.lower() in tank:
-                    print("Role: Tank")
-                print("Kills: " + str(players[player][0][0]))
-                print("Deaths: " + str(players[player][1][0]))
-                print("Ults: " + str(players[player][2][0]))
-                print("First Kills - Deaths: "+ str(players[player][3][0].strip()))
+                print("************************************************")
+                print("Map "+str(i)+" Stats:")
+                print("************************************************")
+            '''
+            names = el.find_all("a")
+            killdeathratio = el.find_all("td", class_="center page1")
+            kills = []
+            deaths = []
+            kdd = el.find_all("td", class_=re.compile("center page1 k-d-diff.* not-in-small"))
+            #for k in kdd:
+             #   print(k.contents[0].strip())
+            for index, kdr in enumerate(killdeathratio):
+                if index % 2 == 0:
+                    kills.append(kdr)
+                else:
+                    deaths.append(kdr)
+            ults = el.find_all("td", class_="center page1 not-in-small")
+            for index, name in enumerate(names):
+                if str(name.contents[0]).lower() in damage:
+                    players[str(name.contents[0])] = [kills[index].contents[0], deaths[index].contents[0],
+                                                      ults[index].contents[0], kdd[index].contents[0].strip(),"Damage",damage[str(name.contents[0]).lower()]]
+                    #print("Role: Damage")
+                elif str(name.contents[0]).lower() in support:
+                    players[str(name.contents[0])] = [kills[index].contents[0], deaths[index].contents[0],
+                                                      ults[index].contents[0], kdd[index].contents[0].strip(), "Support",support[str(name.contents[0]).lower()]]
+                    #print("Role: Support")
+                elif str(name.contents[0]).lower() in tank:
+                    players[str(name.contents[0])] = [kills[index].contents[0], deaths[index].contents[0],
+                                                      ults[index].contents[0], kdd[index].contents[0].strip(), "Tank",tank[str(name.contents[0]).lower()]]
+                    #print("Role: Tank")
+            for player in players:
+                if player in data[i-1] or i == 0 :
+                    '''
+                    print("Name: " + str(player))
+                    if player.lower() in damage:
+                        print("Role: Damage")
+                    elif player.lower() in support:
+                        print("Role: Support")
+                    elif player.lower() in tank:
+                        print("Role: Tank")
+                    print("Kills: " + str(players[player][0]))
+                    print("Deaths: " + str(players[player][1]))
+                    print("Ults: " + str(players[player][2]))
+                    print("First Kills - Deaths: "+ str(players[player][3]))
+                    '''
+                    sheet.write(str(i)+","+str(players[player][5]) + "," + str(players[player][4])+","+str(players[player][0])+","+str(players[player][1])+","
+                                +str(players[player][2])+","+str(players[player][3])+ "\n")
+
 
 def round_map_data(data):
     for round_map in data:
@@ -284,7 +302,7 @@ if __name__ == '__main__':
     print("************************************************")
 
 
-        
+
     match_urls = ["https://www.winstonslab.com/matches/match.php?id=40" + str(i) for i in range(58, 110)]
     match_url=match_urls[0]
     html_data = requests.get(match_url)
@@ -295,17 +313,11 @@ if __name__ == '__main__':
     players_tuple = ast.literal_eval(data)
     sorted_data= sort_winstons_data(players_tuple)
 
-        
-    '''
-    for round_map in sorted_data:
-        if not round_map:
-            break
-        print('map '+str(round_map['map']))
-        print('my man '+str(round_map['Poko']))
-    '''
-    
     #hero_times=hero_play_time(sorted_data[2],'LDN')
     #print(calculate_comp(hero_times))
     #get_comp(players_tuple)
-    team_stats("left-side",sorted_data) # away team
-    #team_stats("right-side",sorted_data) # home team
+    csv = "winston_data.csv"
+    with open(csv,'a') as sheet:
+        sheet.write("map,team,role,kills,deaths,ults,kills-deaths\n")
+    team_stats("left-side",sorted_data,csv) # away team
+    team_stats("right-side", sorted_data,csv) # home team
