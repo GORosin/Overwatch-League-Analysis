@@ -318,6 +318,6 @@ if __name__ == '__main__':
     #get_comp(players_tuple)
     csv = "winston_data.csv"
     with open(csv,'a') as sheet:
-        sheet.write("map,team,role,kills,deaths,ults,kills-deaths\n")
+        sheet.write("map,team,role,kills,deaths,ults,FirstK-D\n")
     team_stats("left-side",sorted_data,csv) # away team
     team_stats("right-side", sorted_data,csv) # home team
