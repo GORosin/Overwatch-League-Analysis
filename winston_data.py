@@ -284,7 +284,7 @@ def team_stats(side,data,csv):
                     print("First Kills - Deaths: "+ str(players[player][3]))
                     '''
                     sheet.write(str(i)+","+str(players[player][5]) + "," + str(players[player][4])+","+str(players[player][0])+","+str(players[player][1])+","
-                                +str(players[player][2])+","+str(players[player][3])+ "\n")
+                                +str(players[player][2])+","+str(players[player][3]))
 
 
 def round_map_data(data):
@@ -295,6 +295,12 @@ def round_map_data(data):
         print('map ' + str(round_map['map']))
         print('my man ' + str(round_map['Eqo']))
 
+def collect_match_data(data):
+    csv = "winston_data.csv"
+    team_stats("left-side", data, csv)  # away team
+    team_stats("right-side", data, csv)  # home team
+    with open(csv, 'a') as sheet:
+        sheet.write('\n')
 
 if __name__ == '__main__':
     print("************************************************")
@@ -316,8 +322,4 @@ if __name__ == '__main__':
     #hero_times=hero_play_time(sorted_data[2],'LDN')
     #print(calculate_comp(hero_times))
     #get_comp(players_tuple)
-    csv = "winston_data.csv"
-    with open(csv,'a') as sheet:
-        sheet.write("map,team,role,kills,deaths,ults,FirstK-D\n")
-    team_stats("left-side",sorted_data,csv) # away team
-    team_stats("right-side", sorted_data,csv) # home team
+    collect_match_data(sorted_data)
