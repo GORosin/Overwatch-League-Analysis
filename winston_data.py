@@ -293,7 +293,7 @@ def team_stats(side,data,csv):
                     print("First Kills - Deaths: "+ str(players[player][3]))
                     '''
                     sheet.write(str(i)+","+str(players[player][5]) + "," + str(players[player][4])+","+str(players[player][0])+","+str(players[player][1])+","
-                                +str(players[player][2])+","+str(players[player][3]))
+                                +str(players[player][2])+","+str(players[player][3])+",")
             sheet.write('\n')
 
 def round_map_data(data):
