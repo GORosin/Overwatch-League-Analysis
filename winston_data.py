@@ -1,5 +1,5 @@
 
-dps_players={
+flex_dps={
     "Ado":"WAS",
     "Adora":"HZS",
     "Agilities":"VAL",
@@ -62,7 +62,7 @@ main_dps={
     "Surefour": "GLA",
 }
 
-support_players={
+flex_supports={
     "AimGod":"BOS",
     "Bdosin":"LDN",
     "BEBE":"HZS",
@@ -118,7 +118,7 @@ main_supports={
     "Yveltal": "CDH",
 }
 
-tank_players={
+flex_tanks={
     "Choihyobin":"SFS",
     "coolmatt":"HOU",
     "Daco":"ATL",
