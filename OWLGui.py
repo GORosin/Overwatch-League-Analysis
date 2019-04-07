@@ -10,7 +10,7 @@ class MyApp(QMainWindow):
         super(MyApp, self).__init__()
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
-        self.csv="owl_scores.csv"
+        self.csv="stage2.csv"
         self.ui.Team1Round1.setText('0')
         self.ui.Team1Round2.setText('0')
         self.ui.Team1Round3.setText('0')
