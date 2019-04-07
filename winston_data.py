@@ -27,13 +27,13 @@ flex_dps={
     "Stratus":"WAS",
     "TviQ":"FLA",
     "YOUNGJIN":"SHD",
-    "ZachaREEE":"DAL",
+    "ZachaREEE":"DAL"
 }
 
 main_dps={
+    "BIRDRING": "LDN",
     "aKm":"DAL",
     "Baconjack":"CDH",
-    "BIRDRING": "LDN",
     "bqb": "FLA",
     "carpe": "PHI",
     "ColourHex": "BOS",
@@ -174,10 +174,7 @@ main_tanks={
 }
 
 #lower case versions of dictionaries for key searching
-damage = dict((key.lower(),value) for key,value in dps_players.items())
-support = dict((key.lower(),value) for key,value in support_players.items())
-tank = dict((key.lower(),value) for key,value in tank_players.items())
-all_players={**damage,**support,**tank}
+
 
 import bs4
 import requests
@@ -187,6 +184,12 @@ import ast
 
 #format of data list of maps
 #each maps has a dictionary of {map:map_name, player 1:[(hero,time),(hero,time)], player 2:[(hero,time),(hero,time)]...}
+l_main_dps={k.lower():v for k,v in main_dps.items()}
+l_flex_dps={k.lower():v for k,v in flex_dps.items()}
+l_main_tanks={k.lower():v for k,v in main_tanks.items()}
+l_flex_tanks={k.lower():v for k,v in flex_tanks.items()}
+l_main_supports={k.lower():v for k,v in main_supports.items()}
+l_flex_supports={k.lower():v for k,v in flex_supports.items()}
 
 def sort_winstons_data(players_tuple):
     match_rounds=[{},{},{},{},{}]
@@ -236,9 +239,18 @@ def calculate_comp(hero_times):
             "Savta Goats":round(savta_goats,3),
             "Wrecking_Crew":round(wrecking_crew,3)}
 
+def write_comp(comp,csv):
+    with open(csv,'a') as sheet:
+        csv.write(comp['Goats']+",")
+        csv.write(comp['Dive']+",")
+        csv.write(comp['Winston_Goats']+",")
+        csv.write(comp['Sombra_Goats']+",")
+        csv.write(comp['Savta_Goats']+",")
+        csv.write(comp['Wrecking_Crew']+",")
+        
 def team_stats(side,data,csv):
     elems=soup.find_all("table",class_="table table-striped "+side+" sortable-table match")
-    players = {}
+    players = [[],[],[],[],[],[]]
     with open (csv,'a') as sheet:
         for i, el in enumerate(elems):
             '''
@@ -265,36 +277,39 @@ def team_stats(side,data,csv):
                     deaths.append(kdr)
             ults = el.find_all("td", class_="center page1 not-in-small")
             for index, name in enumerate(names):
-                if str(name.contents[0]).lower() in damage:
-                    players[str(name.contents[0])] = [kills[index].contents[0], deaths[index].contents[0],
-                                                      ults[index].contents[0], kdd[index].contents[0].strip(),"Damage",damage[str(name.contents[0]).lower()]]
+                if str(name.contents[0]).lower() in l_main_dps and (not bool( players[0])):
+                    players[0] = {"name":name.contents[0],"data":[kills[index].contents[0], deaths[index].contents[0],
+                                                      ults[index].contents[0], kdd[index].contents[0].strip()]}
                     #print("Role: Damage")
-                elif str(name.contents[0]).lower() in support:
-                    players[str(name.contents[0])] = [kills[index].contents[0], deaths[index].contents[0],
-                                                      ults[index].contents[0], kdd[index].contents[0].strip(), "Support",support[str(name.contents[0]).lower()]]
+                elif (str(name.contents[0]).lower() in l_flex_dps) or (str(name.contents[0]).lower() in l_main_dps):
+                    players[1] = {"name":name.contents[0],"data":[kills[index].contents[0], deaths[index].contents[0],
+                                                      ults[index].contents[0], kdd[index].contents[0].strip()]}
                     #print("Role: Support")
-                elif str(name.contents[0]).lower() in tank:
-                    players[str(name.contents[0])] = [kills[index].contents[0], deaths[index].contents[0],
-                                                      ults[index].contents[0], kdd[index].contents[0].strip(), "Tank",tank[str(name.contents[0]).lower()]]
+                elif str(name.contents[0]).lower() in l_main_tanks:
+                    players[2] = {"name":name.contents[0],"data":[kills[index].contents[0], deaths[index].contents[0],
+                                                      ults[index].contents[0], kdd[index].contents[0].strip()]}
+                elif str(name.contents[0]).lower() in l_flex_tanks:
+                    players[3] = {"name":name.contents[0],"data":[kills[index].contents[0], deaths[index].contents[0],
+                                                      ults[index].contents[0], kdd[index].contents[0].strip()]}
+                elif str(name.contents[0]).lower() in l_main_supports:
+                    players[4] = {"name":name.contents[0],"data":[kills[index].contents[0], deaths[index].contents[0],
+                                                      ults[index].contents[0], kdd[index].contents[0].strip()]}
+                elif str(name.contents[0]).lower() in l_flex_supports:
+                    players[5] = {"name":name.contents[0],"data":[kills[index].contents[0], deaths[index].contents[0],
+                                                      ults[index].contents[0], kdd[index].contents[0].strip()]}
                     #print("Role: Tank")
-            for player in players:
-                if player in data[i-1] or i == 0 :
-                    '''
-                    print("Name: " + str(player))
-                    if player.lower() in damage:
-                        print("Role: Damage")
-                    elif player.lower() in support:
-                        print("Role: Support")
-                    elif player.lower() in tank:
-                        print("Role: Tank")
-                    print("Kills: " + str(players[player][0]))
-                    print("Deaths: " + str(players[player][1]))
-                    print("Ults: " + str(players[player][2]))
-                    print("First Kills - Deaths: "+ str(players[player][3]))
-                    '''
-                    sheet.write(str(i)+","+str(players[player][5]) + "," + str(players[player][4])+","+str(players[player][0])+","+str(players[player][1])+","
-                                +str(players[player][2])+","+str(players[player][3])+",")
-            sheet.write('\n')
+            roles={0:"main dps",1:"flex dps",2:"main tank",3:"flex tank",4:"main support",5:"flex support"}
+        for player in range(len(players)):
+            print("Name: " + players[player]['name'])
+            print("Role " +roles[player])
+            print("Kills: " + str(players[player]['data'][0]))
+            print("Deaths: " + str(players[player]['data'][1]))
+            print("Ults: " + str(players[player]['data'][2]))
+            print("First Kills - Deaths: "+ str(players[player]['data'][3]))
+            print("-----------------------------")
+                
+            sheet.write(str(players[player][5]) + "," + str(players[player][4])+","+str(players[player][0])+","+str(players[player][1])+"," +str(players[player][2])+","+str(players[player][3])+",")
+            #sheet.write('\n')
 
 def round_map_data(data):
     for round_map in data:
@@ -307,6 +322,8 @@ def round_map_data(data):
 def collect_match_data(data):
     csv = "winston_data.csv"
     team_stats("left-side", data, csv)  # away team
+    hero_times=hero_play_time(data[i],'LDN')
+    write_comp(calculate_comp(hero_times))
     team_stats("right-side", data, csv)  # home team
     with open(csv, 'a') as sheet:
         sheet.write('\n')
@@ -328,7 +345,5 @@ if __name__ == '__main__':
     players_tuple = ast.literal_eval(data)
     sorted_data= sort_winstons_data(players_tuple)
 
-    #hero_times=hero_play_time(sorted_data[2],'LDN')
-    #print(calculate_comp(hero_times))
-    #get_comp(players_tuple)
-    collect_match_data(sorted_data)
+
+    collect_match_data(sorted_data[1])
