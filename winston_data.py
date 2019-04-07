@@ -190,7 +190,7 @@ l_main_tanks={k.lower():v for k,v in main_tanks.items()}
 l_flex_tanks={k.lower():v for k,v in flex_tanks.items()}
 l_main_supports={k.lower():v for k,v in main_supports.items()}
 l_flex_supports={k.lower():v for k,v in flex_supports.items()}
-
+all_players={**l_main_dps,**l_flex_dps,**l_main_tanks,**l_flex_tanks,**l_main_supports,**l_flex_supports}
 def sort_winstons_data(players_tuple):
     match_rounds=[{},{},{},{},{}]
     for dic in players_tuple:
@@ -308,7 +308,7 @@ def team_stats(side,data,csv):
             print("First Kills - Deaths: "+ str(players[player]['data'][3]))
             print("-----------------------------")
                 
-            sheet.write(str(players[player][5]) + "," + str(players[player][4])+","+str(players[player][0])+","+str(players[player][1])+"," +str(players[player][2])+","+str(players[player][3])+",")
+            #sheet.write(str(players[player][5]) + "," + str(players[player][4])+","+str(players[player][0])+","+str(players[player][1])+"," +str(players[player][2])+","+str(players[player][3])+",")
             #sheet.write('\n')
 
 def round_map_data(data):
@@ -322,8 +322,8 @@ def round_map_data(data):
 def collect_match_data(data):
     csv = "winston_data.csv"
     team_stats("left-side", data, csv)  # away team
-    hero_times=hero_play_time(data[i],'LDN')
-    write_comp(calculate_comp(hero_times))
+    #hero_times=hero_play_time(data[i],'LDN')
+    #write_comp(calculate_comp(hero_times))
     team_stats("right-side", data, csv)  # home team
     with open(csv, 'a') as sheet:
         sheet.write('\n')
