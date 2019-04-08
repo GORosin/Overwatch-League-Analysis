@@ -227,6 +227,13 @@ def calculate_comp(hero_times):
             "Savta Goats":round(savta_goats,3),
             "Wrecking_Crew":round(wrecking_crew,3)}
 
+"""
+team_stats Parameters:
+side = home or away ream
+data = web scraped data
+csv = file to write to
+map = specific map data to print. 0 = print all maps
+"""
 def team_stats(side,data,csv,map=0):
     elems=soup.find_all("table",class_="table table-striped "+side+" sortable-table match")
     players = {}
@@ -274,35 +281,27 @@ def team_stats(side,data,csv,map=0):
                     #print("Role: Tank")
             for player in players:
                 if player in data[i-1] or i == 0 :
+                    if i == map or map == 0:
+                        print("Name: " + str(player))
+                        if player.lower() in damage:
+                            print("Role: Damage")
+                        elif player.lower() in support:
+                            print("Role: Support")
+                        elif player.lower() in tank:
+                            print("Role: Tank")
+                        print("Kills: " + str(players[player][0]))
+                        print("Deaths: " + str(players[player][1]))
+                        print("Ults: " + str(players[player][2]))
+                        print("First Kills - Deaths: "+ str(players[player][3]))
 
-                    print("Name: " + str(player))
-                    if player.lower() in damage:
-                        print("Role: Damage")
-                    elif player.lower() in support:
-                        print("Role: Support")
-                    elif player.lower() in tank:
-                        print("Role: Tank")
-                    print("Kills: " + str(players[player][0]))
-                    print("Deaths: " + str(players[player][1]))
-                    print("Ults: " + str(players[player][2]))
-                    print("First Kills - Deaths: "+ str(players[player][3]))
-
-                    sheet.write(str(i)+","+str(players[player][5]) + "," + str(players[player][4])+","+str(players[player][0])+","+str(players[player][1])+","
-                                +str(players[player][2])+","+str(players[player][3]))
+                        sheet.write(str(i)+","+str(players[player][5]) + "," + str(players[player][4])+","+str(players[player][0])+","+str(players[player][1])+","
+                                    +str(players[player][2])+","+str(players[player][3]))
             sheet.write('\n')
-
-def round_map_data(data):
-    for round_map in data:
-        if not round_map:
-            break
-
-        print('map ' + str(round_map['map']))
-        print('my man ' + str(round_map['Eqo']))
 
 def collect_match_data(data):
     csv = "winston_data.csv"
-    team_stats("left-side", data, csv)  # away team
-    team_stats("right-side", data, csv)  # home team
+    team_stats("left-side", data, csv, 1)  # away team
+    team_stats("right-side", data, csv, 1)  # home team
     with open(csv, 'a') as sheet:
         sheet.write('\n')
 
