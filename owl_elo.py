@@ -48,7 +48,7 @@ def rank_teams(iterations,update,elo_coeff=0):
     elo_reduction =elo_coeff
     global update_config
     update_config=update
-    owl_data=pd.read_csv("owl_scores.csv")
+    owl_data=pd.read_csv("stage2.csv")
     #owl_data=shuffle(owl_data)
     #plot out how a team looks after every match
 
