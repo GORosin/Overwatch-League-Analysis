@@ -234,12 +234,12 @@ data = web scraped data
 csv = file to write to
 map = specific map data to print. 0 = print all maps
 """
-def team_stats(side,data,csv,map=0):
+def team_stats(side, data, csv, game=0):
     elems=soup.find_all("table",class_="table table-striped "+side+" sortable-table match")
     players = {}
     with open (csv,'a') as sheet:
         for i, el in enumerate(elems):
-            if map == 0:
+            if game == 0:
                 if i == 0:
                     print("************************************************")
                     print("Match Stats:")
@@ -249,7 +249,7 @@ def team_stats(side,data,csv,map=0):
                     print("Map "+str(i)+" Stats:")
                     print("************************************************")
             else:
-                if i == map:
+                if i == game:
                     print("************************************************")
                     print("Map " + str(i) + " Stats:")
                     print("************************************************")
@@ -281,7 +281,7 @@ def team_stats(side,data,csv,map=0):
                     #print("Role: Tank")
             for player in players:
                 if player in data[i-1] or i == 0 :
-                    if i == map or map == 0:
+                    if i == game or game == 0:
                         print("Name: " + str(player))
                         if player.lower() in damage:
                             print("Role: Damage")
