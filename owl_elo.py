@@ -43,12 +43,12 @@ def loop_matchs(owl_data,teams):
         loop_series(series,teams)
     return
 
-def rank_teams(iterations,update,elo_coeff=0):
+def rank_teams(iterations,update,stage="stage1",elo_coeff=0):
     global elo_reduction
     elo_reduction =elo_coeff
     global update_config
     update_config=update
-    owl_data=pd.read_csv("stage2.csv")
+    owl_data=pd.read_csv(stage+".csv")
     #owl_data=shuffle(owl_data)
     #plot out how a team looks after every match
 
@@ -62,8 +62,19 @@ def rank_teams(iterations,update,elo_coeff=0):
     
     #plt.plot(range(len(my_team)),my_team)
     #plt.show()
-    rankings= sorted(teams.items(), key=operator.itemgetter(1))
+    #rankings= sorted(teams.items(), key=operator.itemgetter(1))
 
+    #return rankings
+    return teams
+
+def inter_stage_ranking(iterations,update):
+    stage_1=rank_teams(iterations,update,"stage1")
+    stage_2=rank_teams(iterations,update,"stage2")
+    team_rankings={}
+    for k,v in stage_1.items():
+        team_rankings[k]=0.2*stage_1[k]+0.8*stage_2[k]
+
+    rankings=sorted(team_rankings.items(), key=operator.itemgetter(1))
     return rankings
 
 if __name__=="__main__":

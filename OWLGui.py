@@ -1,7 +1,7 @@
 from PyQt5.QtWidgets import QMainWindow, QApplication
 from PyQt5 import uic
 import sys
-from owl_elo import rank_teams
+from owl_elo import inter_stage_ranking as rank_teams
 Ui_MainWindow, QtBaseClass = uic.loadUiType("OWLGui.ui")
 
 
@@ -44,7 +44,7 @@ class MyApp(QMainWindow):
         except:
             elo_reduction=0
             print("using default elo reduction")
-        rankings=rank_teams(iterations,update,elo_reduction)
+        rankings=rank_teams(iterations,update)
         ranks=""
         for i in rankings[::-1]:
             ranks+="team:"+str(i[0])+" elo:"+str(int(i[1]))+"\n"
