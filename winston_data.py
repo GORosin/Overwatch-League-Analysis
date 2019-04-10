@@ -251,6 +251,7 @@ map = specific map data to print. 0 = print all maps
 def team_stats(side, data, csv, game=0):
     elems=soup.find_all("table",class_="table table-striped "+side+" sortable-table match")
     players = [{},{},{},{},{},{}]
+    team_name = ""
     with open (csv,'a') as sheet:
         for i, el in enumerate(elems):
             if i !=game:
@@ -287,6 +288,7 @@ def team_stats(side, data, csv, game=0):
                     players[0] ={"name":name.contents[0],"stats": [kills[index].contents[0], deaths[index].contents[0],
                                                                    ults[index].contents[0], kdd[index].contents[0].strip()]}
                     #print("Role: Damage")
+                    team_name = damage_lower.get(str(name.contents[0]).lower())
                 elif str(name.contents[0]).lower() in flex_damage_lower or str(name.contents[0]).lower() in damage_lower :
                     players[1] = {"name":name.contents[0],"stats": [kills[index].contents[0],
                                                                     deaths[index].contents[0],ults[index].contents[0],
@@ -313,14 +315,14 @@ def team_stats(side, data, csv, game=0):
             print("Deaths: " + str(players[player]['stats'][1]))
             print("Ults: " + str(players[player]['stats'][2]))
             print("First Kills - Deaths: "+ str(players[player]['stats'][3]))
-                
+            #print(team_name)
                 #sheet.write(str(i)+","+str(players[player][5]) + "," + str(players[player][4])+","+str(players[player][0])+","+str(players[player][1])+"," +str(players[player][2])+","+str(players[player][3]))
-       
+    return team_name
 
 def collect_match_data(data):
     csv = "winston_data.csv"
-    team_stats("left-side", data, csv, 3)  # away team
-    team_stats("right-side", data, csv, 3)  # home team
+    print(team_stats("left-side", data, csv, 0))  # away team
+    print(team_stats("right-side", data, csv, 3))  # home team
     with open(csv, 'a') as sheet:
         sheet.write('\n')
 
