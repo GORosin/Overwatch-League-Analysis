@@ -342,4 +342,4 @@ if __name__ == '__main__':
     #hero_times=hero_play_time(sorted_data[2],'LDN')
     #print(calculate_comp(hero_times))
     #get_comp(players_tuple)
-    collect_match_data(sorted_data)
+    collect_match_data(sorted_data[1])
