@@ -253,6 +253,8 @@ def team_stats(side, data, csv, game=0):
     players = [{},{},{},{},{},{}]
     with open (csv,'a') as sheet:
         for i, el in enumerate(elems):
+            if i !=game:
+                continue
             if game == 0:
                 if i == 0:
                     print("************************************************")
@@ -317,8 +319,8 @@ def team_stats(side, data, csv, game=0):
 
 def collect_match_data(data):
     csv = "winston_data.csv"
-    team_stats("left-side", data, csv, 5)  # away team
-    team_stats("right-side", data, csv, 5)  # home team
+    team_stats("left-side", data, csv, 3)  # away team
+    team_stats("right-side", data, csv, 3)  # home team
     with open(csv, 'a') as sheet:
         sheet.write('\n')
 
