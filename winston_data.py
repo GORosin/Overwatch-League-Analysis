@@ -27,7 +27,9 @@ flex_dps={
     "Stratus":"WAS",
     "TviQ":"FLA",
     "YOUNGJIN":"SHD",
-    "ZachaREEE":"DAL"
+    "ZachaREEE":"DAL",
+    "BIRDRING": "LDN"
+    
 }
 
 main_dps={
@@ -248,7 +250,7 @@ map = specific map data to print. 0 = print all maps
 """
 def team_stats(side, data, csv, game=0):
     elems=soup.find_all("table",class_="table table-striped "+side+" sortable-table match")
-    players = {}
+    players = [{},{},{},{},{},{}]
     with open (csv,'a') as sheet:
         for i, el in enumerate(elems):
             if game == 0:
@@ -279,56 +281,44 @@ def team_stats(side, data, csv, game=0):
                     deaths.append(kdr)
             ults = el.find_all("td", class_="center page1 not-in-small")
             for index, name in enumerate(names):
-                if str(name.contents[0]).lower() in damage_lower:
-                    players[str(name.contents[0])] = [kills[index].contents[0], deaths[index].contents[0],
-                                                      ults[index].contents[0], kdd[index].contents[0].strip(),
-                                                      "Damage", damage_lower[str(name.contents[0]).lower()]]
+                if str(name.contents[0]).lower() in damage_lower and not str(name.contents[0]).lower() in flex_damage_lower :
+                    players[0] ={"name":name.contents[0],"stats": [kills[index].contents[0], deaths[index].contents[0],
+                                                                   ults[index].contents[0], kdd[index].contents[0].strip()]}
                     #print("Role: Damage")
-                elif str(name.contents[0]).lower() in flex_damage_lower:
-                    players[str(name.contents[0])] = [kills[index].contents[0], deaths[index].contents[0],
-                                                      ults[index].contents[0], kdd[index].contents[0].strip(),
-                                                      "Damage", flex_damage_lower[str(name.contents[0]).lower()]]
+                elif str(name.contents[0]).lower() in flex_damage_lower or str(name.contents[0]).lower() in damage_lower :
+                    players[1] = {"name":name.contents[0],"stats": [kills[index].contents[0],
+                                                                    deaths[index].contents[0],ults[index].contents[0],
+                                                                    kdd[index].contents[0].strip()]}
                 elif str(name.contents[0]).lower() in support_lower:
-                    players[str(name.contents[0])] = [kills[index].contents[0], deaths[index].contents[0],
-                                                      ults[index].contents[0], kdd[index].contents[0].strip(),
-                                                      "Support", support_lower[str(name.contents[0]).lower()]]
+                    players[2] = {"name":name.contents[0],"stats": [kills[index].contents[0],
+                                                                    deaths[index].contents[0],
+                                                                    ults[index].contents[0], kdd[index].contents[0].strip()]}
                     #print("Role: Support")
                 elif str(name.contents[0]).lower() in flex_support_lower:
-                    players[str(name.contents[0])] = [kills[index].contents[0], deaths[index].contents[0],
-                                                      ults[index].contents[0], kdd[index].contents[0].strip(),
-                                                      "Support", flex_support_lower[str(name.contents[0]).lower()]]
+                    players[3]={"name":name.contents[0],"stats": [kills[index].contents[0],
+                                                                  deaths[index].contents[0],ults[index].contents[0],
+                                                                  kdd[index].contents[0].strip()]}
                 elif str(name.contents[0]).lower() in tank_lower:
-                    players[str(name.contents[0])] = [kills[index].contents[0], deaths[index].contents[0],
-                                                      ults[index].contents[0], kdd[index].contents[0].strip(),
-                                                      "Tank", tank_lower[str(name.contents[0]).lower()]]
+                    players[4]={"name":name.contents[0],"stats": [kills[index].contents[0], deaths[index].contents[0],
+                                                                  ults[index].contents[0], kdd[index].contents[0].strip()]}
                     #print("Role: Tank")
                 elif str(name.contents[0]).lower() in flex_tank_lower:
-                    players[str(name.contents[0])] = [kills[index].contents[0], deaths[index].contents[0],
-                                                      ults[index].contents[0], kdd[index].contents[0].strip(), "Tank",
-                                                      flex_tank_lower[str(name.contents[0]).lower()]]
-            for player in players:
-                if player in data[i-1] or i == 0 :
-                    if i == game or game == 0:
-                        print("Name: " + str(player))
-                        if player.lower() in damage_lower or player.lower() in flex_damage_lower:
-                            print("Role: Damage")
-                        elif player.lower() in support_lower or player.lower() in flex_support_lower:
-                            print("Role: Support")
-                        elif player.lower() in tank_lower or player.lower() in flex_tank_lower:
-                            print("Role: Tank")
-                        print("Kills: " + str(players[player][0]))
-                        print("Deaths: " + str(players[player][1]))
-                        print("Ults: " + str(players[player][2]))
-                        print("First Kills - Deaths: "+ str(players[player][3]))
-
-                        sheet.write(str(i)+","+str(players[player][5]) + "," + str(players[player][4])+","+str(players[player][0])+","+str(players[player][1])+","
-                                    +str(players[player][2])+","+str(players[player][3]))
-            sheet.write('\n')
+                    players[5]={"name":name.contents[0],"stats": [kills[index].contents[0], deaths[index].contents[0],
+                                                                  ults[index].contents[0], kdd[index].contents[0].strip()]}
+        for player in range(len(players)):
+            print("Name: " + str(players[player]['name']))
+            print("Kills: " + str(players[player]['stats'][0]))
+            print("Deaths: " + str(players[player]['stats'][1]))
+            print("Ults: " + str(players[player]['stats'][2]))
+            print("First Kills - Deaths: "+ str(players[player]['stats'][3]))
+                
+                #sheet.write(str(i)+","+str(players[player][5]) + "," + str(players[player][4])+","+str(players[player][0])+","+str(players[player][1])+"," +str(players[player][2])+","+str(players[player][3]))
+       
 
 def collect_match_data(data):
     csv = "winston_data.csv"
-    team_stats("left-side", data, csv, 1)  # away team
-    team_stats("right-side", data, csv, 1)  # home team
+    team_stats("left-side", data, csv, 5)  # away team
+    team_stats("right-side", data, csv, 5)  # home team
     with open(csv, 'a') as sheet:
         sheet.write('\n')
 
