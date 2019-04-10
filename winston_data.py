@@ -1,174 +1,186 @@
 
-dps_players={
+flex_dps={
     "Ado":"WAS",
     "Adora":"HZS",
     "Agilities":"VAL",
-    "aKm":"DAL",
     "Apply":"FLA",
     "Architect":"SFS",
-    "Baconjack":"CDH",
     "Bazzi":"HZS",
-    "BIRDRING":"LDN",
     "blase":"BOS",
-    "bqb":"FLA",
-    "carpe":"PHI",
-    "ColourHex":"BOS",
-    "Corey":"WAS",
-    "dafran":"ATL",
-    "Danteh":"HOU",
     "DDing":"SHD",
-    "Decay":"GLA",
-    "diem":" SHD",
-    "EFFECT":"DAL",
     "Eileen":"GZC",
     "eqo":"PHI",
     "Erster":"ATL",
-    "Fleta":"SEO",
-    "GodsB":"HZS",
     "Guard":"LDN",
     "Haksal":"VAN",
-    "Happy":"GZC",
     "Hydration":"GLA",
-    "ivy":"TOR",
     "Jake":"HOU",
     "JinMu":"CDH",
-    "KariV":"VAL",
     "KSF":"VAL",
     "Kyb":"GZC",
     "Libero":"NYE",
-    "LiNkzr":"HOU",
     "Munchkin":"SEO",
-    "Nenne":"NYE",
     "NiCOgdh":"PAR",
-    "NLaaeR":"ATL",
-    "Profit":"LDN",
     "Rascal":"SFS",
-    "Saebyeolbe":"NYE",
-    "sayaplayer":"FLA",
-    "SeoMinSoo":"VAN",
-    "sinatraa":"SFS",
     "snillo":"PHI",
-    "SoOn":"PAR",
     "Stellar":"TOR",
-    "Stitch":"VAN",
     "Stratus":"WAS",
-    "STRIKER":"SFS",
-    "Surefour":"GLA",
     "TviQ":"FLA",
     "YOUNGJIN":"SHD",
-    "ZachaREEE":"DAL",
+    "ZachaREEE":"DAL"
 }
 
-support_players={
-    "Aid":"TOR",
+main_dps={
+    "BIRDRING": "LDN",
+    "aKm":"DAL",
+    "Baconjack":"CDH",
+    "bqb": "FLA",
+    "carpe": "PHI",
+    "ColourHex": "BOS",
+    "Corey": "WAS",
+    "dafran": "ATL",
+    "Danteh": "HOU",
+    "Decay": "GLA",
+    "diem": " SHD",
+    "EFFECT": "DAL",
+    "Fleta": "SEO",
+    "GodsB": "HZS",
+    "Happy": "GZC",
+    "ivy": "TOR",
+    "KariV": "VAL",
+    "LiNkzr": "HOU",
+    "Nenne": "NYE",
+    "NLaaeR": "ATL",
+    "Profit": "LDN",
+    "Saebyeolbe": "NYE",
+    "sayaplayer": "FLA",
+    "SeoMinSoo": "VAN",
+    "sinatraa": "SFS",
+    "SoOn": "PAR",
+    "Stitch": "VAN",
+    "STRIKER": "SFS",
+    "Surefour": "GLA",
+}
+
+flex_supports={
     "AimGod":"BOS",
-    "alemao":"BOS",
-    "Anamo":"NYE",
-    "ArK":"NYE",
-    "Bani":"HOU",
     "Bdosin":"LDN",
     "BEBE":"HZS",
-    "BigGoose":"GLA",
-    "Boink":"HOU",
     "Boombox":"PHI",
-    "Chara":"GZC",
-    "Closer":"DAL",
-    "CoMa":"SHD",
-    "Custa":"VAL",
     "Dogman":"ATL",
-    "Elk":"PHI",
-    "Fahzix":"WAS",
     "Gido":"WAS",
     "HaGoPeun":"FLA",
-    "Hyeonu":"WAS",
     "HyP":"PAR",
-    "iDK":"HZS",
     "IZaYaKI":"VAL",
-    "Jecse":"SEO",
     "JJONAK":"NYE",
-    "Kellex":"BOS",
     "Kodak":"ATL",
-    "Kris":"FLA",
-    "Kruise":"PAR",
     "Kyo":"CDH",
     "Luffy":"SHD",
-    "Masaa":"ATL",
-    "moth":"SFS",
     "Neko":"TOR",
-    "neptuNo":"PHI",
-    "NUS":"LDN",
     "RAPEL":"VAN",
     "Rawkus":"HOU",
     "Revenge":"HZS",
-    "RoKy":"TOR",
     "ryujehong":"SEO",
     "Shaz":"GLA",
     "shu":"GZC",
     "sleepy":"SFS",
-    "SLIME":"VAN",
     "Twilight":"VAN",
     "uNKOE":"DAL",
     "Viol2t":"SFS",
-    "Yveltal":"CDH",
 }
 
-tank_players={
-    "ameng":"CDH",
-    "Axxiom":"BOS",
-    "BenBest":"PAR",
-    "BUMPER":"VAN",
+main_supports={
+    "Aid":"TOR",
+    "alemao":"BOS",
+    "Anamo":"NYE",
+    "ArK":"NYE",
+    "Bani":"HOU",
+    "BigGoose":"GLA",
+    "Boink":"HOU",
+    "Chara": "GZC",
+    "Closer": "DAL",
+    "CoMa": "SHD",
+    "Custa": "VAL",
+    "Elk": "PHI",
+    "Fahzix": "WAS",
+    "Hyeonu": "WAS",
+    "iDK": "HZS",
+    "Jecse": "SEO",
+    "Kellex": "BOS",
+    "Kris": "FLA",
+    "Kruise": "PAR",
+    "Masaa": "ATL",
+    "moth": "SFS",
+    "neptuNo": "PHI",
+    "NUS": "LDN",
+    "RoKy": "TOR",
+    "SLIME": "VAN",
+    "Yveltal": "CDH",
+}
+
+flex_tanks={
     "Choihyobin":"SFS",
     "coolmatt":"HOU",
     "Daco":"ATL",
     "Elsa":"CDH",
     "Envy":"TOR",
-    "Fate":"VAL",
     "Finnsi":"PAR",
-    "Fissure":"SEO",
     "Fury":"LDN",
-    "Fusions":"BOS",
-    "Gamsu":"SHD",
-    "Gator":"ATL",
     "Geguri":"SHD",
-    "Gesture":"LDN",
-    "Guxue":"HZS",
     "HOTBA":"GZC",
-    "Janus":"WAS",
     "JJANU":"VAN",
-    "KuKi":"VAL",
     "lateyoung":"CDH",
-    "Mano":"NYE",
     "Mcgravy":"FLA",
     "MekO":"NYE",
     "Michelle":"SEO",
-    "Muma":"HOU",
     "Nevix":"SFS",
-    "NoSmite":"HZS",
     "NotE":"BOS",
-    "OGE":"DAL",
     "Poko":"PHI",
-    "Pokpo":"ATL",
     "rCk":"DAL",
     "Ria":"HZS",
-    "Rio":"GZC",
-    "rOar":"GLA",
-    "Sado":"PHI",
     "Sansam":"WAS",
-    "Smurf":"SFS",
     "SPACE":"VAL",
     "SPREE":"HOU",
-    "super":"SFS",
-    "SWoN":"FLA",
     "Void":"GLA",
     "xepheR":"FLA",
-    "Yakpung":"TOR",
+}
+
+main_tanks={
+    "ameng": "CDH",
+    "Axxiom": "BOS",
+    "BenBest": "PAR",
+    "BUMPER": "VAN",
+    "Fate": "VAL",
+    "Fissure": "SEO",
+    "Fusions": "BOS",
+    "Gamsu": "SHD",
+    "Gator": "ATL",
+    "Gesture": "LDN",
+    "Guxue": "HZS",
+    "Janus": "WAS",
+    "KuKi": "VAL",
+    "Mano": "NYE",
+    "Muma": "HOU",
+    "NoSmite": "HZS",
+    "OGE": "DAL",
+    "Pokpo": "ATL",
+    "Rio": "GZC",
+    "rOar": "GLA",
+    "Sado": "PHI",
+    "Smurf": "SFS",
+    "super": "SFS",
+    "SWoN": "FLA",
+    "Yakpung": "TOR",
 }
 
 #lower case versions of dictionaries for key searching
-damage = dict((key.lower(),value) for key,value in dps_players.items())
-support = dict((key.lower(),value) for key,value in support_players.items())
-tank = dict((key.lower(),value) for key,value in tank_players.items())
-all_players={**damage,**support,**tank}
+damage_lower = dict((key.lower(),value) for key,value in main_dps.items())
+flex_damage_lower = dict((key.lower(),value) for key,value in flex_dps.items())
+support_lower = dict((key.lower(),value) for key,value in main_supports.items())
+flex_support_lower = dict((key.lower(),value) for key,value in flex_supports.items())
+tank_lower = dict((key.lower(),value) for key,value in main_tanks.items())
+flex_tank_lower = dict((key.lower(),value) for key,value in flex_tanks.items())
+all_players={**damage_lower,**flex_damage_lower,**support_lower,**flex_support_lower,**tank_lower,**flex_tank_lower}
 
 import bs4
 import requests
@@ -267,27 +279,42 @@ def team_stats(side, data, csv, game=0):
                     deaths.append(kdr)
             ults = el.find_all("td", class_="center page1 not-in-small")
             for index, name in enumerate(names):
-                if str(name.contents[0]).lower() in damage:
+                if str(name.contents[0]).lower() in damage_lower:
                     players[str(name.contents[0])] = [kills[index].contents[0], deaths[index].contents[0],
-                                                      ults[index].contents[0], kdd[index].contents[0].strip(),"Damage",damage[str(name.contents[0]).lower()]]
+                                                      ults[index].contents[0], kdd[index].contents[0].strip(),
+                                                      "Damage", damage_lower[str(name.contents[0]).lower()]]
                     #print("Role: Damage")
-                elif str(name.contents[0]).lower() in support:
+                elif str(name.contents[0]).lower() in flex_damage_lower:
                     players[str(name.contents[0])] = [kills[index].contents[0], deaths[index].contents[0],
-                                                      ults[index].contents[0], kdd[index].contents[0].strip(), "Support",support[str(name.contents[0]).lower()]]
+                                                      ults[index].contents[0], kdd[index].contents[0].strip(),
+                                                      "Damage", flex_damage_lower[str(name.contents[0]).lower()]]
+                elif str(name.contents[0]).lower() in support_lower:
+                    players[str(name.contents[0])] = [kills[index].contents[0], deaths[index].contents[0],
+                                                      ults[index].contents[0], kdd[index].contents[0].strip(),
+                                                      "Support", support_lower[str(name.contents[0]).lower()]]
                     #print("Role: Support")
-                elif str(name.contents[0]).lower() in tank:
+                elif str(name.contents[0]).lower() in flex_support_lower:
                     players[str(name.contents[0])] = [kills[index].contents[0], deaths[index].contents[0],
-                                                      ults[index].contents[0], kdd[index].contents[0].strip(), "Tank",tank[str(name.contents[0]).lower()]]
+                                                      ults[index].contents[0], kdd[index].contents[0].strip(),
+                                                      "Support", flex_support_lower[str(name.contents[0]).lower()]]
+                elif str(name.contents[0]).lower() in tank_lower:
+                    players[str(name.contents[0])] = [kills[index].contents[0], deaths[index].contents[0],
+                                                      ults[index].contents[0], kdd[index].contents[0].strip(),
+                                                      "Tank", tank_lower[str(name.contents[0]).lower()]]
                     #print("Role: Tank")
+                elif str(name.contents[0]).lower() in flex_tank_lower:
+                    players[str(name.contents[0])] = [kills[index].contents[0], deaths[index].contents[0],
+                                                      ults[index].contents[0], kdd[index].contents[0].strip(), "Tank",
+                                                      flex_tank_lower[str(name.contents[0]).lower()]]
             for player in players:
                 if player in data[i-1] or i == 0 :
                     if i == game or game == 0:
                         print("Name: " + str(player))
-                        if player.lower() in damage:
+                        if player.lower() in damage_lower or player.lower() in flex_damage_lower:
                             print("Role: Damage")
-                        elif player.lower() in support:
+                        elif player.lower() in support_lower or player.lower() in flex_support_lower:
                             print("Role: Support")
-                        elif player.lower() in tank:
+                        elif player.lower() in tank_lower or player.lower() in flex_tank_lower:
                             print("Role: Tank")
                         print("Kills: " + str(players[player][0]))
                         print("Deaths: " + str(players[player][1]))
