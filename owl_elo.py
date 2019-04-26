@@ -11,6 +11,11 @@ team_map_diff={"PHI":0,"LDN":0,"BOS":0,"NYE":0,"PAR":0,"GLA":0,
            "SHD":0,"DAL":0,"CDH":0,"VAL":0,"SEO":0,"HZS":0,
            "GZC":0,"TOR":0,"WAS":0,"HOU":0,"ATL":0,"FLA":0,
            "SFS":0,"VAN":0}
+
+teams={"PHI":1000,"LDN":1000,"BOS":1000,"NYE":1000,"PAR":1000,"GLA":1000,
+       "SHD":1000,"DAL":1000,"CDH":1000,"VAL":1000,"SEO":1000,"HZS":1000,
+       "GZC":1000,"TOR":1000,"WAS":1000,"HOU":1000,"ATL":1000,"FLA":1000,
+       "SFS":1000,"VAN":1000}
 def update_scores(teamA,teamB,scoreA,scoreB,teams,update=30):
     QA=10**(teams[teamA]/400)
     QB=10**(teams[teamB]/400)
@@ -48,15 +53,12 @@ def rank_teams(iterations,update,stage="stage1",elo_coeff=0):
     elo_reduction =elo_coeff
     global update_config
     update_config=update
-    owl_data=pd.read_csv(stage+".csv")
+    owl_data=pd.read_csv(str(stage)+".csv")
     #owl_data=shuffle(owl_data)
     #plot out how a team looks after every match
 
     #number of iterations
-    teams={"PHI":1000,"LDN":1000,"BOS":1000,"NYE":1000,"PAR":1000,"GLA":1000,
-           "SHD":1000,"DAL":1000,"CDH":1000,"VAL":1000,"SEO":1000,"HZS":1000,
-           "GZC":1000,"TOR":1000,"WAS":1000,"HOU":1000,"ATL":1000,"FLA":1000,
-           "SFS":1000,"VAN":1000}
+
     for i in range(iterations):
         loop_matchs(owl_data,teams)
     
@@ -68,7 +70,7 @@ def rank_teams(iterations,update,stage="stage1",elo_coeff=0):
     return teams
 
 def inter_stage_ranking(iterations,update):
-    stage_1=rank_teams(iterations,update,"stage1")
+    stage_1=rank_teams(10,update,"stage1")
     stage_2=rank_teams(iterations,update,"stage2")
     team_rankings={}
     for k,v in stage_1.items():
@@ -78,7 +80,7 @@ def inter_stage_ranking(iterations,update):
     return rankings
 
 if __name__=="__main__":
-    rankings=rank_teams(30,20,0)
+    rankings=inter_stage_ranking(20,5)
     for i in rankings[::-1]:
         print("team:"+str(i[0])+" elo:"+str(int(i[1])))
 
