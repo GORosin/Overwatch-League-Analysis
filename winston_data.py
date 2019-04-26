@@ -201,7 +201,7 @@ role_probs=role_probs.set_index("hero")
 
 #save data for debugging purposes
 def save_html(request):
-     pickle.dump(request, open( "html_data.pkl", "wb" ))
+    pickle.dump(request, open( "html_data.pkl", "wb" ))
 
 def get_html():
     return pickle.load( open( "html_data.pkl", "rb" ))
@@ -219,7 +219,7 @@ def sort_winstons_data(players_tuple):
     return match_rounds
 
 def hero_play_time(round_data,team):
-    heroes={'Reinhardt':0,'Winston':0,'Orisa':0,'Hammond':0,'Zarya':0,'D.Va':0,'Roadhog':0,'Widowmaker':0,"Tracer":0,"Sombra":0,"Pharah":0,"Other":0,"Brigitte":0,"Ana":0,"Zenyatta":0,"Mercy":0,"Lucio":0,"Moira":0,"Mccree":0}
+    heroes={'Reinhardt':0,'Winston':0,'Orisa':0,'Hammond':0,'Zarya':0,'D.Va':0,'Roadhog':0,'Widowmaker':0,"Tracer":0,"Sombra":0,"Pharah":0,"Other":0,"Brigitte":0,"Ana":0,"Zenyatta":0,"Mercy":0,"Lucio":0,"Moira":0,"Mccree":0,'Torbjörn':0}
     total_time=0
     for player,hero_list in round_data.items():
         if player=='map':
@@ -238,7 +238,6 @@ def hero_play_time(round_data,team):
     return heroes
 
 def calculate_comp(hero_times):
-    print(hero_times)
     three_three=hero_times['Zarya']
     goats=hero_times['Reinhardt']
     winston_goats=three_three-goats-hero_times['Orisa']
@@ -258,7 +257,6 @@ def calculate_comp(hero_times):
 def write_comp(team,data,csv):
     comp_data=hero_play_time(data,team)
     comp_dict=calculate_comp(comp_data)
-    print(comp_dict)
     with open(csv,"a") as csv_file:
         csv_file.write(str(comp_dict['Goats'])+",")
         csv_file.write(str(comp_dict['Winston_Goats'])+",")
@@ -326,7 +324,7 @@ def team_stats(side, data, csv, game=0,write=True):
         players[3]=player_data[determine_player_role(player_data,'flex_tank')]
         players[4]=player_data[determine_player_role(player_data,'main_support')]
         players[5]=player_data[determine_player_role(player_data,'flex_support')]
-        
+        team_name=all_players[players[0]['Name'].lower()]
         for player in range(len(players)):
             print("Name: " + str(players[player]['Name']))
             print("Kills: " + str(players[player]['stats'][0]))
@@ -366,8 +364,8 @@ def collect_match_data(data):
     home_team=''
     for i in range(5):
         if i==0:
-            away_team=team_stats("left-side", data, csv, i,False)  # away team
-            home_team=team_stats("right-side", data, csv, i,False)  # home team
+            away_team=team_stats("left-side", data[0], csv, i,False)  # away team
+            home_team=team_stats("right-side", data[0], csv, i,False)  # home team
         else:
             try:
                 with open(csv,"a") as sheet:
@@ -416,20 +414,21 @@ if __name__ == '__main__':
 
     match_urls = ["https://www.winstonslab.com/matches/match.php?id=40" + str(i) for i in range(58, 129)]
     #    for match_url in match_urls:
-    #match_url=match_urls[0]
-    for match_url in match_urls:
-        html_data = requests.get(match_url)
-        html_data.raise_for_status()
-        soup = bs4.BeautifulSoup(html_data.text, features="lxml")
-        parsed_html = [line for line in html_data.text.split('\n') if 'heroStatsArr.concat' in line]
-        data = re.split(r"\(|\)", parsed_html[0])[1][1:-1]
-        players_tuple = ast.literal_eval(data)
-        sorted_data= sort_winstons_data(players_tuple)
-        csv="test.csv"
-        #away_team=team_stats("left-side", sorted_data[0], csv, 1,False)
-        #away_team=team_stats("right-side", sorted_data[0], csv, 1,False)
+    match_url=match_urls[0]
+    #for match_url in match_urls:
+    #html_data = requests.get(match_url)
+    #html_data.raise_for_status()
+    html_data=get_html()
+    soup = bs4.BeautifulSoup(html_data.text, features="lxml")
+    parsed_html = [line for line in html_data.text.split('\n') if 'heroStatsArr.concat' in line]
+    data = re.split(r"\(|\)", parsed_html[0])[1][1:-1]
+    players_tuple = ast.literal_eval(data)
+    sorted_data= sort_winstons_data(players_tuple)
+    csv="test.csv"
+    #away_team=team_stats("left-side", sorted_data[4], csv, 4,False)
+    #away_team=team_stats("right-side", sorted_data[2], csv, 1,False)
         
-        #hero_times=hero_play_time(sorted_data[1],'LDN')
-        #print(calculate_comp(hero_times))
+    #hero_times=hero_play_time(sorted_data[1],'LDN')
+    #print(calculate_comp(hero_times))
     
-        collect_match_data(sorted_data)
+    collect_match_data(sorted_data)
