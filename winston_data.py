@@ -352,12 +352,12 @@ def collect_match_data(data):
             sheet.write("away_main_tank_kills,away_main_tank_deaths,away_main_tank_ults,away_main_tank_kdr,")
             sheet.write("away_flex_tank_kills,away_flex_tank_deaths,away_flex_tank_ults,away_flex_tank_kdr,")
             
-            sheet.write("hom_main_dps_kills,hom_main_dps_deaths,hom_main_dps_ults,hom_main_dps_kdr,")
-            sheet.write("hom_flex_dps_kills,hom_flex_dps_deaths,hom_flex_dps_ults,hom_flex_dps_kdr,")
-            sheet.write("hom_main_support_kills,hom_main_support_deaths,hom_main_support_ults,hom_main_support_kdr,")
-            sheet.write("hom_flex_support_kills,hom_flex_support_deaths,hom_flex_support_ults,hom_flex_support_kdr,")
-            sheet.write("hom_main_tank_kills,hom_main_tank_deaths,hom_main_tank_ults,hom_main_tank_kdr,")
-            sheet.write("hom_flex_tank_kills,hom_flex_tank_deaths,hom_flex_tank_ults,hom_flex_tank_kdr,")
+            sheet.write("home_main_dps_kills,hom_main_dps_deaths,hom_main_dps_ults,hom_main_dps_kdr,")
+            sheet.write("home_flex_dps_kills,hom_flex_dps_deaths,hom_flex_dps_ults,hom_flex_dps_kdr,")
+            sheet.write("home_main_support_kills,hom_main_support_deaths,hom_main_support_ults,hom_main_support_kdr,")
+            sheet.write("home_flex_support_kills,hom_flex_support_deaths,hom_flex_support_ults,hom_flex_support_kdr,")
+            sheet.write("home_main_tank_kills,hom_main_tank_deaths,hom_main_tank_ults,hom_main_tank_kdr,")
+            sheet.write("home_flex_tank_kills,hom_flex_tank_deaths,hom_flex_tank_ults,hom_flex_tank_kdr,")
             
             sheet.write("away_team_goats,away_team_Winston_goats,away_team_sombra_goats,away_team_ana_goats,away_team_dive,away_team_wrecking_crew,")
             sheet.write("home_team_goats,home_team_Winston_goats,home_team_sombra_goats,home_team_ana_goats,home_team_dive,home_team_wrecking_crew\n")
@@ -426,10 +426,10 @@ if __name__ == '__main__':
         players_tuple = ast.literal_eval(data)
         sorted_data= sort_winstons_data(players_tuple)
         csv="test.csv"
-        away_team=team_stats("left-side", sorted_data[0], csv, 1,False)
-        away_team=team_stats("right-side", sorted_data[0], csv, 1,False)
+        #away_team=team_stats("left-side", sorted_data[0], csv, 1,False)
+        #away_team=team_stats("right-side", sorted_data[0], csv, 1,False)
         
         #hero_times=hero_play_time(sorted_data[1],'LDN')
         #print(calculate_comp(hero_times))
     
-        #Ecollect_match_data(sorted_data)
+        collect_match_data(sorted_data)
