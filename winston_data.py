@@ -183,12 +183,16 @@ def collect_match_data(data):
             
     home_team=''
     home_team=''
-    for i in range(5):
+    for i in range(6):
         if i==0:
             away_team=team_stats("left-side", data[0], csv, i,False)  # away team
             home_team=team_stats("right-side", data[0], csv, i,False)  # home team
         else:
             try:
+                away_team=team_stats("left-side", data[i-1], csv, i,False)  # away team
+                home_team=team_stats("right-side", data[i-1], csv, i,False)  # home team
+                away_team=away_team.strip()
+                home_team=home_team.strip()
                 with open(csv,"a") as sheet:
                     sheet.write(away_team)
                     sheet.write(",")
@@ -201,13 +205,13 @@ def collect_match_data(data):
                 with open(csv, 'a') as sheet:
                     sheet.write(",")
                 write_comp(home_team,data[i-1],csv)
-                time.sleep(0.1)
+                with open(csv, 'a') as sheet:
+                    sheet.write('\n')
+                time.sleep(0.01)
             except Exception as e:
                 print(e)
                 print("no map 5")
-            with open(csv, 'a') as sheet:
-                print("new line")
-                sheet.write('\n')
+                
 
 
 def calculate_role_probabilities(hero_list):
@@ -241,17 +245,21 @@ def determine_player_role(player_data,role):
     return role_player
 
 def download_html():
-    match_urls = ["https://www.winstonslab.com/matches/match.php?id=" + str(4000+i) for i in range(58, 128)]
+    #match_urls = ["https://www.winstonslab.com/matches/match.php?id=" + str(4000+i) for i in range(58, 128)]
+    match_urls = ["https://www.winstonslab.com/matches/match.php?id=" + str(4000+i) for i in range(58+16, 58+18)]
     for i,match_url in enumerate(match_urls):
         print("downloading: "+str(match_url))
         html_data = requests.get(match_url)
         html_data.raise_for_status()
         print("saving to "+"html_match_data/match_"+str(i)+".pkl")
         save_html(html_data,"html_match_data/match_"+str(i)+".pkl")
+        
 if __name__ == '__main__':
     print("************************************************")
     print("IMAGINATION IS THE ESSENCE OF DISCOVERY")
     print("************************************************")
+    download_html()
+    '''
     files=os.listdir("html_match_data")
     files.sort(key=lambda x:int(x.split("_")[-1].split(".")[0]))
     for html in files:
@@ -266,6 +274,7 @@ if __name__ == '__main__':
                 log.write(html)
                 log.write(" because: ")
                 log.write(str(e))
+                log.write("\n")
             continue
         players_tuple = ast.literal_eval(data)
         sorted_data= sort_winstons_data(players_tuple)
@@ -277,4 +286,4 @@ if __name__ == '__main__':
         #print(calculate_comp(hero_times))
     
         collect_match_data(sorted_data)
-    
+    '''
