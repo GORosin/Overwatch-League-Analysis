@@ -1,189 +1,3 @@
-
-flex_dps={
-    "Ado":"WAS",
-    "Adora":"HZS",
-    "Agilities":"VAL",
-    "Apply":"FLA",
-    "Architect":"SFS",
-    "Bazzi":"HZS",
-    "blase":"BOS",
-    "DDing":"SHD",
-    "Eileen":"GZC",
-    "eqo":"PHI",
-    "Erster":"ATL",
-    "Guard":"LDN",
-    "Haksal":"VAN",
-    "Hydration":"GLA",
-    "Jake":"HOU",
-    "JinMu":"CDH",
-    "KSF":"VAL",
-    "Kyb":"GZC",
-    "Libero":"NYE",
-    "Munchkin":"SEO",
-    "NiCOgdh":"PAR",
-    "Rascal":"SFS",
-    "snillo":"PHI",
-    "Stellar":"TOR",
-    "Stratus":"WAS",
-    "TviQ":"FLA",
-    "YOUNGJIN":"SHD",
-    "ZachaREEE":"DAL",
-    "BIRDRING": "LDN"
-    
-}
-
-main_dps={
-    "BIRDRING": "LDN",
-    "aKm":"DAL",
-    "Baconjack":"CDH",
-    "bqb": "FLA",
-    "carpe": "PHI",
-    "ColourHex": "BOS",
-    "Corey": "WAS",
-    "dafran": "ATL",
-    "Danteh": "HOU",
-    "Decay": "GLA",
-    "diem": " SHD",
-    "EFFECT": "DAL",
-    "Fleta": "SEO",
-    "GodsB": "HZS",
-    "Happy": "GZC",
-    "ivy": "TOR",
-    "KariV": "VAL",
-    "LiNkzr": "HOU",
-    "Nenne": "NYE",
-    "NLaaeR": "ATL",
-    "Profit": "LDN",
-    "Saebyeolbe": "NYE",
-    "sayaplayer": "FLA",
-    "SeoMinSoo": "VAN",
-    "sinatraa": "SFS",
-    "SoOn": "PAR",
-    "Stitch": "VAN",
-    "STRIKER": "SFS",
-    "Surefour": "GLA",
-}
-
-flex_supports={
-    "AimGod":"BOS",
-    "Bdosin":"LDN",
-    "BEBE":"HZS",
-    "Boombox":"PHI",
-    "Dogman":"ATL",
-    "Gido":"WAS",
-    "HaGoPeun":"FLA",
-    "HyP":"PAR",
-    "IZaYaKI":"VAL",
-    "JJONAK":"NYE",
-    "Kodak":"ATL",
-    "Kyo":"CDH",
-    "Luffy":"SHD",
-    "Neko":"TOR",
-    "RAPEL":"VAN",
-    "Rawkus":"HOU",
-    "Revenge":"HZS",
-    "ryujehong":"SEO",
-    "Shaz":"GLA",
-    "shu":"GZC",
-    "sleepy":"SFS",
-    "Twilight":"VAN",
-    "uNKOE":"DAL",
-    "Viol2t":"SFS",
-}
-
-main_supports={
-    "Aid":"TOR",
-    "alemao":"BOS",
-    "Anamo":"NYE",
-    "ArK":"NYE",
-    "Bani":"HOU",
-    "BigG00se":"GLA",
-    "Boink":"HOU",
-    "Chara": "GZC",
-    "Closer": "DAL",
-    "CoMa": "SHD",
-    "Custa": "VAL",
-    "Elk": "PHI",
-    "Fahzix": "WAS",
-    "Hyeonu": "WAS",
-    "iDK": "HZS",
-    "Jecse": "SEO",
-    "Kellex": "BOS",
-    "Kris": "FLA",
-    "Kruise": "PAR",
-    "Masaa": "ATL",
-    "moth": "SFS",
-    "neptuNo": "PHI",
-    "NUS": "LDN",
-    "RoKy": "TOR",
-    "SLIME": "VAN",
-    "Yveltal": "CDH",
-}
-
-flex_tanks={
-    "Choihyobin":"SFS",
-    "coolmatt":"HOU",
-    "Daco":"ATL",
-    "Elsa":"CDH",
-    "Envy":"TOR",
-    "Finnsi":"PAR",
-    "Fury":"LDN",
-    "Geguri":"SHD",
-    "HOTBA":"GZC",
-    "JJANU":"VAN",
-    "lateyoung":"CDH",
-    "Mcgravy":"FLA",
-    "MekO":"NYE",
-    "Michelle":"SEO",
-    "Nevix":"SFS",
-    "NotE":"BOS",
-    "Poko":"PHI",
-    "rCk":"DAL",
-    "Ria":"HZS",
-    "Sansam":"WAS",
-    "SPACE":"VAL",
-    "SPREE":"HOU",
-    "Void":"GLA",
-    "xepheR":"FLA",
-}
-
-main_tanks={
-    "ameng": "CDH",
-    "Axxiom": "BOS",
-    "BenBest": "PAR",
-    "BUMPER": "VAN",
-    "Fate": "VAL",
-    "Fissure": "SEO",
-    "Fusions": "BOS",
-    "Gamsu": "SHD",
-    "Gator": "ATL",
-    "Gesture": "LDN",
-    "Guxue": "HZS",
-    "Janus": "WAS",
-    "KuKi": "VAL",
-    "Mano": "NYE",
-    "Muma": "HOU",
-    "NoSmite": "HZS",
-    "OGE": "DAL",
-    "Pokpo": "ATL",
-    "Rio": "GZC",
-    "rOar": "GLA",
-    "Sado": "PHI",
-    "Smurf": "SFS",
-    "super": "SFS",
-    "SWoN": "FLA",
-    "Yakpung": "TOR",
-}
-
-#lower case versions of dictionaries for key searching
-damage_lower = dict((key.lower(),value) for key,value in main_dps.items())
-flex_damage_lower = dict((key.lower(),value) for key,value in flex_dps.items())
-support_lower = dict((key.lower(),value) for key,value in main_supports.items())
-flex_support_lower = dict((key.lower(),value) for key,value in flex_supports.items())
-tank_lower = dict((key.lower(),value) for key,value in main_tanks.items())
-flex_tank_lower = dict((key.lower(),value) for key,value in flex_tanks.items())
-all_players={**damage_lower,**flex_damage_lower,**support_lower,**flex_support_lower,**tank_lower,**flex_tank_lower}
-
 import bs4
 import requests
 import re
@@ -193,6 +7,7 @@ import time
 import math
 import pandas as pd
 import pickle
+from dictionaries import *
 
 #format of data list of maps
 #each maps has a dictionary of {map:map_name, player 1:[(hero,time),(hero,time)], player 2:[(hero,time),(hero,time)]...}
@@ -200,11 +15,11 @@ role_probs=pd.read_csv("hero_liklihood_matrix.txt")
 role_probs=role_probs.set_index("hero")
 
 #save data for debugging purposes
-def save_html(request):
-    pickle.dump(request, open( "html_data.pkl", "wb" ))
+def save_html(request,filename):
+    pickle.dump(request, open( filename, "wb" ))
 
-def get_html():
-    return pickle.load( open( "html_data.pkl", "rb" ))
+def get_html(filename):
+    return pickle.load( open(filename, "rb" ))
 
 def sort_winstons_data(players_tuple):
     match_rounds=[{},{},{},{},{}]
@@ -307,17 +122,23 @@ def team_stats(side, data, csv, game=0,write=True):
                     deaths.append(kdr)
             ults = el.find_all("td", class_="center page1 not-in-small")
 
-
+            
 
             player_data={}
             for index, name in enumerate(names):
-                player_data[name.contents[0]]={"Name":name.contents[0],
-                                               "stats": [kills[index].contents[0], deaths[index].contents[0],
-                                                         ults[index].contents[0], kdd[index].contents[0].strip()],
-                                               "role":calculate_role_probabilities(data[name.contents[0]])}
-
+                try:
+                    player_data[name.contents[0]]={"Name":name.contents[0],
+                                                   "stats": [kills[index].contents[0], deaths[index].contents[0],
+                                                             ults[index].contents[0], kdd[index].contents[0].strip()],
+                                                   "role":calculate_role_probabilities(data[name.contents[0]])}
+                except Exception as e:
+                    print(e)
+                    player_data[name.contents[0].lower()]={"Name":name.contents[0].lower(),
+                                                   "stats": [kills[index].contents[0], deaths[index].contents[0],
+                                                             ults[index].contents[0], kdd[index].contents[0].strip()],
+                                                   "role":default_role_probabilities(name.contents[0].lower())}
   
- 
+                
         players[0]=player_data[determine_player_role(player_data,'main_dps')]
         players[1]=player_data[determine_player_role(player_data,'flex_dps')]
         players[2]=player_data[determine_player_role(player_data,'main_tank')]
@@ -396,6 +217,20 @@ def calculate_role_probabilities(hero_list):
             role_liklihoods[key]+=math.log(role_probs.loc[hero[0],key]/100,2)+math.log(hero[1],2)
     return role_liklihoods
 
+def default_role_probabilities(player):
+    if player in damage_lower:
+         return {"main_dps":0,"flex_dps":-1,"main_tank":-1,"flex_tank":-1,"main_support":-1,"flex_support":-1}
+    if player in flex_damage_lower:
+         return {"main_dps":-1,"flex_dps":0,"main_tank":-1,"flex_tank":-1,"main_support":-1,"flex_support":-1}
+    if player in tank_lower:
+         return {"main_dps":-1,"flex_dps":-1,"main_tank":0,"flex_tank":-1,"main_support":-1,"flex_support":-1}
+    if player in flex_tank_lower:
+         return {"main_dps":-1,"flex_dps":-1,"main_tank":-1,"flex_tank":0,"main_support":-1,"flex_support":-1}
+    if player in support_lower:
+         return {"main_dps":-1,"flex_dps":-1,"main_tank":-1,"flex_tank":-1,"main_support":0,"flex_support":-1}
+    if player in flex_support_lower:
+         return {"main_dps":-1,"flex_dps":-1,"main_tank":-1,"flex_tank":-1,"main_support":-1,"flex_support":0}
+
 def determine_player_role(player_data,role):
     largest=-100
     role_player=''
@@ -405,30 +240,41 @@ def determine_player_role(player_data,role):
             role_player=player
     return role_player
 
+def download_html():
+    match_urls = ["https://www.winstonslab.com/matches/match.php?id=" + str(4000+i) for i in range(58, 128)]
+    for i,match_url in enumerate(match_urls):
+        print("downloading: "+str(match_url))
+        html_data = requests.get(match_url)
+        html_data.raise_for_status()
+        print("saving to "+"html_match_data/match_"+str(i)+".pkl")
+        save_html(html_data,"html_match_data/match_"+str(i)+".pkl")
 if __name__ == '__main__':
     print("************************************************")
     print("IMAGINATION IS THE ESSENCE OF DISCOVERY")
     print("************************************************")
-
-
-
-    match_urls = ["https://www.winstonslab.com/matches/match.php?id=40" + str(i) for i in range(58, 129)]
-    #    for match_url in match_urls:
-    match_url=match_urls[0]
-    #for match_url in match_urls:
-    #html_data = requests.get(match_url)
-    #html_data.raise_for_status()
-    html_data=get_html()
-    soup = bs4.BeautifulSoup(html_data.text, features="lxml")
-    parsed_html = [line for line in html_data.text.split('\n') if 'heroStatsArr.concat' in line]
-    data = re.split(r"\(|\)", parsed_html[0])[1][1:-1]
-    players_tuple = ast.literal_eval(data)
-    sorted_data= sort_winstons_data(players_tuple)
-    csv="test.csv"
-    #away_team=team_stats("left-side", sorted_data[4], csv, 4,False)
-    #away_team=team_stats("right-side", sorted_data[2], csv, 1,False)
+    files=os.listdir("html_match_data")
+    files.sort(key=lambda x:int(x.split("_")[-1].split(".")[0]))
+    for html in files:
+        html_data=get_html("html_match_data/"+html)
+        soup = bs4.BeautifulSoup(html_data.text, features="lxml")
+        parsed_html = [line for line in html_data.text.split('\n') if 'heroStatsArr.concat' in line]
+        try:
+            data = re.split(r"\(|\)", parsed_html[0])[1][1:-1]
+        except Exception as e:
+            with open("winstons_log.txt","a") as log:
+                log.write("failed on: ")
+                log.write(html)
+                log.write(" because: ")
+                log.write(str(e))
+            continue
+        players_tuple = ast.literal_eval(data)
+        sorted_data= sort_winstons_data(players_tuple)
+        #csv="test.csv"
+        #away_team=team_stats("left-side", sorted_data[4], csv, 4,False)
+        #away_team=team_stats("right-side", sorted_data[2], csv, 1,False)
         
-    #hero_times=hero_play_time(sorted_data[1],'LDN')
-    #print(calculate_comp(hero_times))
+        #hero_times=hero_play_time(sorted_data[1],'LDN')
+        #print(calculate_comp(hero_times))
     
-    collect_match_data(sorted_data)
+        collect_match_data(sorted_data)
+    
