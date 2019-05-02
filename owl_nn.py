@@ -13,7 +13,7 @@ def train(x,y):
     nn_win_model=create_model()
     print(x.shape)
     print(y.shape)
-    nn_win_model.fit(x,y,epochs=1000, batch_size=30)
+    nn_win_model.fit(x,y,epochs=300, batch_size=30)
     return nn_win_model
 
 def one_hot_encode(value,size=20):
@@ -27,9 +27,8 @@ def create_model():
     model.add(Dense(70,activation='sigmoid'))
     model.add(Dense(30,activation='sigmoid'))
     model.add(Dense(15,activation='sigmoid'))
-    model.add(Dense(7,activation='sigmoid'))
     model.add(Dense(2,kernel_initializer='normal',activation='softmax'))
-    opt=Adam(lr=0.1,decay=0.09)
+    opt=Adam(lr=0.1,decay=0.12)
     model.compile(loss='categorical_crossentropy',optimizer=opt)
     return model
 
@@ -74,4 +73,4 @@ def create_labels():
 
 X,y,teams=create_labels()
 model=train(X[:200],y[:200])
-accuracy(model,X[200:],y[200:],teams)
+#accuracy(model,X[200:],y[200:],teams)
