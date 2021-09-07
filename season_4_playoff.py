@@ -12,11 +12,12 @@ def estimate_logistic():
 
     vs_dragon={"CDH":0.6,"GZC":0.9,"HZS":0.75,"LAV":0.999,"NYXL":0.7,"PHL":0.55,"SEO":0.65}
     
-    d_xy=[(team_elo["DAL"]-team_elo[key],value) for key,value in vs_dallas.items()] 
-    sh_xy=[(team_elo["SHD"]-team_elo[key],value) for key,value in vs_dragon.items()]
+    d_xy=[(team_elo["DAL"]-team_elo[key],value,key) for key,value in vs_dallas.items()] 
+    sh_xy=[(team_elo["SHD"]-team_elo[key],value,key) for key,value in vs_dragon.items()]
     xy_total=d_xy+sh_xy
     X=np.array([i[0] for i in xy_total]+[-1*i[0] for i in xy_total])
     Y=np.array([i[1] for i in xy_total]+[1-i[1] for i in xy_total])
+    labels=[i[2] for i in xy_total]+[i[2] for i in xy_total]
     results,cov=curve_fit(logistic,X,Y)
     print(results)
     X_fit=np.linspace(-70,70,100)
@@ -33,7 +34,9 @@ def estimate_logistic():
     plt.plot(X,Y,".")
     plt.ylabel("Probablity of team 1 winning")
     plt.xlabel("Power Ranking difference team 1 - team 2")
-    plt.savefig("elo_probality_estimate")
-
+    #plt.savefig("elo_probality_estimate")
+    for idx,(i,j) in enumerate(zip(X,Y)):
+        plt.annotate(labels[idx],xy=(i,j),ha='center')
+    plt.show()
 
 estimate_logistic()
