@@ -2,7 +2,7 @@ from scipy.optimize import curve_fit
 from math import exp
 import numpy as np
 import matplotlib.pyplot as plt
-
+from random import random
 
 def logistic(x, k=17.95):
     return 1 / (1 + np.exp(-1 * x / k))
@@ -49,17 +49,19 @@ def estimate_logistic():
 
 class Results:
     def __init__(self, team1, team2, team_score1, team_score2):
-        self.teams = [team1, team2]
-        self.winner = teams[team_score1 < team_score2]
-        self.loser = teams[team_score1 > team_score2]
-        self.scores = [team_score1, team_score2]
-
+        self.teams = (team1, team2)
+        self.winner = self.teams[team_score1 < team_score2]
+        self.loser = self.teams[team_score1 > team_score2]
+        self.scores = (team_score1, team_score2)
+    def __str__(self):
+        return f"{self.teams[0]}-{self.teams[1]} {self.scores[0]} : {self.scores[1]}"
 
 def match(team1, team2):
     score_team1 = 0
     score_team2 = 0
-    team1_win_prob = team_elo[team1] - team_elo[team2]
+    team1_win_prob = logistic(team_elo[team1] - team_elo[team2])
     while score_team1 < 3 and score_team2 < 3:
+        randnum=random()
         score_team1 += randnum < team1_win_prob
         score_team2 += randnum > team1_win_prob
     return Results(team1, team2, score_team1, score_team2)
@@ -68,8 +70,9 @@ def match(team1, team2):
 def finals(team1, team2):
     score_team1 = 0
     score_team2 = 0
-    team1_win_prob = team_elo[team1] - team_elo[team2]
+    team1_win_prob =logistic(team_elo[team1] - team_elo[team2])
     while score_team1 < 4 and score_team2 < 4:
+        randnum=random()
         score_team1 += randnum < team1_win_prob
         score_team2 += randnum > team1_win_prob
     return Results(team1, team2, score_team1, score_team2)
@@ -92,31 +95,53 @@ def tournament_graph():
     match2_results = match(team4, team7)
     match3_results = match(team2, team8)
     match4_results = match(team3, team5)
-
+    print("round 1")
+    print(match1_results)
+    print(match2_results)
+    print(match3_results)
+    print(match4_results)
+    print()
     # winners semis
     match5_results = match(match1_results.winner, match2_results.winner)
     match6_results = match(match3_results.winner, match4_results.winner)
-
+    print("Winners Semis")
+    print(match5_results)
+    print(match6_results)
+    print()
     # first losers
     match7_results = match(match1_results.loser, match2_results.loser)
     match8_results = match(match3_results.loser, match4_results.loser)
-
+    print("Losers , round 1")
+    print(match7_results)
+    print(match8_results)
+    print()
     # winners finals
     match9_results = match(match5_results.winner, match6_results.winner)
-
+    print("Winners Finals")
+    print(match9_results)
+    print()
     # second losers
     match10_results = match(match6_results.loser, match7_results.winner)
     match11_results = match(match5_results.loser, match8_results.winner)
-
+    print("losers round 2")
+    print(match10_results)
+    print(match11_results)
+    print()
     # lowers semis
     match12_results = match(match10_results.winner, match11_results.winner)
-
+    print("losers semis")
+    print(match12_results)
+    print()
     # losers finals
     match13_results = match(match12_results.winner, match9_results.loser)
-
+    print("losers finals")
+    print(match13_results)
+    print()
     # grand finals
     final_results = finals(match13_results.winner, match9_results.winner)
+    print("Grand final")
+    print(final_results)
 
-
-estimate_logistic()
-
+    print()
+    print(f"Champions: {final_results.winner}")
+tournament_graph()
