@@ -3,7 +3,7 @@ from math import exp
 import numpy as np
 import matplotlib.pyplot as plt
 from random import random
-
+import pandas as pd
 def logistic(x, k=17.95):
     return 1 / (1 + np.exp(-1 * x / k))
 
@@ -95,53 +95,71 @@ def tournament_graph():
     match2_results = match(team4, team7)
     match3_results = match(team2, team8)
     match4_results = match(team3, team5)
-    print("round 1")
-    print(match1_results)
-    print(match2_results)
-    print(match3_results)
-    print(match4_results)
-    print()
+    #print("round 1")
+    #print(match1_results)
+    #print(match2_results)
+    #print(match3_results)
+    #print(match4_results)
+    #print()
     # winners semis
+    
     match5_results = match(match1_results.winner, match2_results.winner)
     match6_results = match(match3_results.winner, match4_results.winner)
-    print("Winners Semis")
-    print(match5_results)
-    print(match6_results)
-    print()
+    #print("Winners Semis")
+    #print(match5_results)
+    #print(match6_results)
+    #print()
     # first losers
     match7_results = match(match1_results.loser, match2_results.loser)
     match8_results = match(match3_results.loser, match4_results.loser)
-    print("Losers , round 1")
-    print(match7_results)
-    print(match8_results)
-    print()
+    #print("Losers , round 1")
+    #print(match7_results)
+    #print(match8_results)
+    #print()
     # winners finals
     match9_results = match(match5_results.winner, match6_results.winner)
-    print("Winners Finals")
-    print(match9_results)
-    print()
+    #print("Winners Finals")
+    #print(match9_results)
+    #print()
     # second losers
     match10_results = match(match6_results.loser, match7_results.winner)
     match11_results = match(match5_results.loser, match8_results.winner)
-    print("losers round 2")
-    print(match10_results)
-    print(match11_results)
-    print()
+    #print("losers round 2")
+    #print(match10_results)
+    #print(match11_results)
+    #print()
     # lowers semis
     match12_results = match(match10_results.winner, match11_results.winner)
-    print("losers semis")
-    print(match12_results)
-    print()
+    #print("losers semis")
+    #print(match12_results)
+    #print()
     # losers finals
     match13_results = match(match12_results.winner, match9_results.loser)
-    print("losers finals")
-    print(match13_results)
-    print()
+    #print("losers finals")
+    #print(match13_results)
+    #print()
     # grand finals
     final_results = finals(match13_results.winner, match9_results.winner)
-    print("Grand final")
-    print(final_results)
+    #print("Grand final")
+    #print(final_results)
 
-    print()
-    print(f"Champions: {final_results.winner}")
-tournament_graph()
+    #print()
+    #print(f"Champions: {final_results.winner}")
+    
+    return {"round1_match1":str(match1_results),"round1_match2":str(match2_results),"round1_match3":str(match3_results),"round1_match4":str(match4_results),"winner_semi1":str(match5_results),"winner_semi2":str(match6_results),"losers1_match1":str(match7_results),"losers1_match2":str(match8_results),"winners_final":str(match9_results),"losers2_match1":str(match10_results),"losers2_match2":str(match11_results),"loser_semi":str(match12_results),"loser_finals":str(match13_results),"grand_finals":str(final_results)}
+
+data=[]
+for i in range(20000):
+    data.append(tournament_graph())
+
+df=pd.DataFrame(data)
+print("Round 1 Match 1")
+print(df["round1_match1"].value_counts().head(5))
+print("Roun 1 Match 2")
+print(df["round1_match2"].value_counts().head(5))
+print("Roun 1 Match 3")
+print(df["round1_match3"].value_counts().head(5))
+print("Roun 1 Match 4")
+print(df["round1_match4"].value_counts().head(5))
+print("Grand Finals")
+print(df["grand_finals"].value_counts().head(5))
