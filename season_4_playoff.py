@@ -4,13 +4,15 @@ import numpy as np
 import matplotlib.pyplot as plt
 from random import random
 import pandas as pd
-def logistic(x, k=17.95):
+
+
+def logistic(x, k=400):
     return 1 / (1 + np.exp(-1 * x / k))
 
 
-team_elo = {"DAL": 121, "SHD": 120, "GLA": 117, "ATL": 114, "CDH": 111, "SFS": 111, "WAS": 107, "HOU": 106, "PHL": 104,
-            "TOR": 102, "SEO": 99, "PAR": 99, "BOS": 97, "HZS": 96, "FLR": 96, "NYXL": 93, "GZC": 87, "LDN": 81,
-            "VAN": 73, "LAV": 64}
+team_elo = {"DAL": 988.5, "SHD": 1130.1, "GLA": 1261.4, "ATL": 1091, "CDH": 1229.5, "SFS": 1184.1, "WAS": 1053.8, "HOU": 980.1, "PHL": 1112.4,
+            "TOR": 1012.3, "SEO": 1011.7, "PAR": 929.4, "BOS": 846.3, "HZS": 918.4, "FLR": 945.1, "NYXL": 1004.5, "GZC": 972.1, "LDN": 829.3,
+            "VAN": 788.1, "LAV": 711.9}
 
 
 def estimate_logistic():
@@ -54,7 +56,7 @@ class Results:
         self.loser = self.teams[team_score1 > team_score2]
         self.scores = (team_score1, team_score2)
     def __str__(self):
-        return f"{self.teams[0]}-{self.teams[1]} {self.scores[0]} : {self.scores[1]}"
+        return f"{self.teams[self.teams[0]<self.teams[1]]}-{self.teams[self.teams[0]>self.teams[1]]} {self.scores[self.teams[0]<self.teams[1]]} : {self.scores[self.teams[0]>self.teams[1]]} "
 
 def match(team1, team2):
     score_team1 = 0
@@ -154,12 +156,12 @@ for i in range(20000):
 
 df=pd.DataFrame(data)
 print("Round 1 Match 1")
-print(df["round1_match1"].value_counts().head(5))
+print(df["round1_match1"].value_counts().head(6))
 print("Roun 1 Match 2")
-print(df["round1_match2"].value_counts().head(5))
+print(df["round1_match2"].value_counts().head(6))
 print("Roun 1 Match 3")
-print(df["round1_match3"].value_counts().head(5))
+print(df["round1_match3"].value_counts().head(6))
 print("Roun 1 Match 4")
-print(df["round1_match4"].value_counts().head(5))
+print(df["round1_match4"].value_counts().head(6))
 print("Grand Finals")
-print(df["grand_finals"].value_counts().head(5))
+print(df["grand_finals"].value_counts().head(8))
